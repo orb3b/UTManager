@@ -46,3 +46,6 @@ SOURCES += main.cpp\
 HEADERS  += MainView.h
 
 FORMS    += MainView.ui
+
+RESOURCES += \
+    resources.qrc
