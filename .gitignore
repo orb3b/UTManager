@@ -13,4 +13,5 @@
 *.a
 
 # Ignore unimportant directories
+bin
 build
