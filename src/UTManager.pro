@@ -24,6 +24,8 @@ OUTDIR = ..
 ###########################
 DESTDIR = $$OUTDIR\\bin
 
+INCLUDEPATH += .
+
 CONFIG(debug, debug|release){
     DEFINES += DEBUG
     TARGET = $$DEBUG_TARGET
@@ -41,13 +43,22 @@ system(del $${DESTDIR}\\$${DEBUG_TARGET}.*)
 ###########################
 
 SOURCES += main.cpp \
-    View/MainView.cpp
+    View/MainView.cpp \
+    View/ProjectView.cpp \
+    Logger.cpp \
+    View/LogView.cpp
 
 HEADERS  += \
-    View/MainView.h
+    View/MainView.h \
+    View/ProjectView.h \
+    Logger.h \
+    View/LogView.h \
+    define.h
 
 FORMS    += \
-    View/MainView.ui
+    View/MainView.ui \
+    View/ProjectView.ui \
+    View/LogView.ui
 
 RESOURCES += \
     resources.qrc
