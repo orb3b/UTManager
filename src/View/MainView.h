@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 #include "LogView.h"
+#include "DataProvider/UTDataProvider.h"
 
 namespace Ui {
 class MainView;
@@ -31,6 +32,8 @@ private:
 private:
     Ui::MainView *ui;
     LogView m_logView;
+
+    UTDataProvider m_provider;
 };
 
 #endif // MAINVIEW_H

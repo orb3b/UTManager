@@ -33,6 +33,8 @@ void MainView::closeEvent(QCloseEvent *event)
 void MainView::onActionOpenProject(bool)
 {
     //ui->menuFile->insertAction();
+    sLogMsg << "MainView::onActionOpenProject";
+    m_provider.openProject(QString("blabla"));
 }
 
 void MainView::onActionShowSettings()

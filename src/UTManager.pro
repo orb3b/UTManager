@@ -46,14 +46,25 @@ SOURCES += main.cpp \
     View/MainView.cpp \
     View/ProjectView.cpp \
     Logger.cpp \
-    View/LogView.cpp
+    View/LogView.cpp \
+    DataProvider/UTDataProvider.cpp \
+    DataProvider/Entity/UTEntity.cpp \
+    DataProvider/Model/UTEntityModel.cpp \
+    DataProvider/UTProject.cpp \
+    DataProvider/Model/UTPlayerModel.cpp
 
 HEADERS  += \
     View/MainView.h \
     View/ProjectView.h \
     Logger.h \
     View/LogView.h \
-    define.h
+    define.h \
+    DataProvider/UTDataProvider.h \
+    Enumerations.h \
+    DataProvider/Entity/UTEntity.h \
+    DataProvider/Model/UTEntityModel.h \
+    DataProvider/UTProject.h \
+    DataProvider/Model/UTPlayerModel.h
 
 FORMS    += \
     View/MainView.ui \
