@@ -1,7 +1,7 @@
 #ifndef MAINVIEW_H
 #define MAINVIEW_H
 
-#include <QMainWindow>
+#include <QtWidgets>
 
 namespace Ui {
 class MainView;

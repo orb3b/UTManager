@@ -1,6 +1,6 @@
 #include "View/MainView.h"
 #include <QApplication>
-#include <QPlastiqueStyle>
+#include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     MainView w;
     w.show();
     
-    QApplication::setStyle(new QPlastiqueStyle);
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     return a.exec();
 }
