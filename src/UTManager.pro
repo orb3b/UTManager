@@ -40,12 +40,14 @@ system(del $${DESTDIR}\\$${DEBUG_TARGET}.*)
 ###       SOURCES       ###
 ###########################
 
-SOURCES += main.cpp\
-        MainView.cpp
+SOURCES += main.cpp \
+    View/MainView.cpp
 
-HEADERS  += MainView.h
+HEADERS  += \
+    View/MainView.h
 
-FORMS    += MainView.ui
+FORMS    += \
+    View/MainView.ui
 
 RESOURCES += \
     resources.qrc
