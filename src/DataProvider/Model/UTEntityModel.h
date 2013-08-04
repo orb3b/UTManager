@@ -14,6 +14,8 @@ public:
     explicit UTEntityModel(QObject *parent = 0);
     ~UTEntityModel();
 
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+
     virtual int loadEntities() = 0;
     virtual int saveEntities() = 0;
 
@@ -24,6 +26,8 @@ public:
 
     int rowCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
+
+    bool setData(const QModelIndex &index, const QVariant &value, int role);
 
 signals:
 

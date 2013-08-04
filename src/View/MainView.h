@@ -9,6 +9,8 @@ namespace Ui {
 class MainView;
 }
 
+class ProjectView;
+
 class MainView : public QMainWindow
 {
     Q_OBJECT

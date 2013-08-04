@@ -10,6 +10,14 @@ UTEntityModel::~UTEntityModel()
     clearEntityList();
 }
 
+Qt::ItemFlags UTEntityModel::flags(const QModelIndex &index) const
+{
+    if (!index.isValid())
+        return Qt::ItemIsEnabled;
+
+    return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
+}
+
 UTEntity *UTEntityModel::getEntityById(EntityID id)
 {
     if (m_entityMap.contains(id))
@@ -26,7 +34,7 @@ int UTEntityModel::rowCount(const QModelIndex &parent) const
         return m_entityMap.size();
 }
 
-QVariant UTEntityModel::data(const QModelIndex &index, int /*role*/) const
+QVariant UTEntityModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
@@ -38,6 +46,12 @@ QVariant UTEntityModel::data(const QModelIndex &index, int /*role*/) const
     i += index.row();
 
     return QVariant::fromValue(*(i.value()));
+}
+
+bool UTEntityModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    emit dataChanged(index, index);
+    return true;
 }
 
 

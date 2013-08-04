@@ -33,3 +33,14 @@ QImage UTEntity::getImage() const
 {
     return QImage(m_pathToImage);
 }
+
+const UTEntity &UTEntity::operator =(const UTEntity &entity)
+{
+    m_settings = entity.settings();
+    m_id = entity.id();
+    m_name = entity.name();
+    m_pathToImage = entity.pathToImage();
+    setParent(entity.parent());
+
+    return *this;
+}

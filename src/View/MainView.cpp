@@ -1,6 +1,8 @@
 #include "MainView.h"
 #include "ui_MainView.h"
 
+#include "ProjectView.h"
+
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainView)
@@ -35,6 +37,8 @@ void MainView::onActionOpenProject(bool)
     //ui->menuFile->insertAction();
     sLogMsg << "MainView::onActionOpenProject";
     m_provider.openProject(QString("blabla"));
+
+    setCentralWidget(new ProjectView(&m_provider, this));
 }
 
 void MainView::onActionShowSettings()

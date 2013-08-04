@@ -29,6 +29,8 @@ public:
 
     const UTProjectSettings *settings() const { return m_settings; }
 
+    const UTEntity& operator = (const UTEntity& entity);
+
 signals:
     
 public slots:

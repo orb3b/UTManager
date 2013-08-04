@@ -51,7 +51,10 @@ SOURCES += main.cpp \
     DataProvider/Entity/UTEntity.cpp \
     DataProvider/Model/UTEntityModel.cpp \
     DataProvider/UTProject.cpp \
-    DataProvider/Model/UTPlayerModel.cpp
+    DataProvider/Model/UTPlayerModel.cpp \
+    View/Players/PlayerDelegateEditor.cpp \
+    View/Players/PlayerDelegate.cpp \
+    View/UTEntityDelegateEditor.cpp
 
 HEADERS  += \
     View/MainView.h \
@@ -64,12 +67,16 @@ HEADERS  += \
     DataProvider/Entity/UTEntity.h \
     DataProvider/Model/UTEntityModel.h \
     DataProvider/UTProject.h \
-    DataProvider/Model/UTPlayerModel.h
+    DataProvider/Model/UTPlayerModel.h \
+    View/Players/PlayerDelegateEditor.h \
+    View/Players/PlayerDelegate.h \
+    View/UTEntityDelegateEditor.h
 
 FORMS    += \
     View/MainView.ui \
     View/ProjectView.ui \
-    View/LogView.ui
+    View/LogView.ui \
+    View/Players/PlayerDelegateEditor.ui
 
 RESOURCES += \
     resources.qrc
