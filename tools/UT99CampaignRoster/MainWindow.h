@@ -2,10 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
+
+#include "Roster/Roster.h"
 
 class QAction;
-
-class Roster;
 
 namespace Ui {
 class MainWindow;

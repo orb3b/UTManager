@@ -4,7 +4,6 @@
 #include <QMessageBox>
 
 #include "Logs.h"
-#include "Roster/Roster.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // ui - Group editor
     //connect(ui->actionPawn_groups_editor, )
+
+    // ui -> Actions
+    ui->actionOpen->setShortcut(QKeySequence(tr("Ctrl+O")));
 
     // configure roster
     m_roster = new Roster();
@@ -84,14 +86,16 @@ QString MainWindow::toShortDescription(const Pawn &member)
 QColor MainWindow::teamColor(const Pawn &member)
 {
     switch(member.team()){
-    case Pawn::RedTeam:
+    case Pawn::Red:
         return QColor(Qt::red);
-    case Pawn::BlueTeam:
+    case Pawn::Blue:
         return QColor(Qt::blue);
-    case Pawn::GreenTeam:
+    case Pawn::Green:
         return QColor(Qt::green);
-    case Pawn::GoldTeam:
+    case Pawn::Gold:
         return QColor(Qt::darkYellow);
+    default:
+        return QColor(Qt::black);
     }
 
     return QColor(Qt::black);
@@ -145,7 +149,7 @@ void MainWindow::onTeamMemberAdded(Pawn member)
 
 void MainWindow::onTeamMemberRemoved(Pawn member)
 {
-    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(member.name()))
+    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(toShortDescription(member.name()), Qt::MatchExactly))
         delete item;
 }
 

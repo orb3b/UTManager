@@ -1,5 +1,7 @@
 #include "Roster.h"
 
+#include <QMetaType>
+
 #include "PawnCollection.h"
 #include "TeamCollection.h"
 
@@ -8,6 +10,7 @@ Roster::Roster(QObject *parent) :
     m_pawnCollection(nullptr),
     m_teamCollection(nullptr)
 {
+    registerMetatypes();
 }
 
 Roster::~Roster()
@@ -39,6 +42,14 @@ TeamCollection *Roster::teamCollection()
         m_teamCollection = new TeamCollection();
 
     return m_teamCollection;
+}
+
+void Roster::registerMetatypes()
+{
+    static bool registered = false;
+    if (!registered) {
+        qRegisterMetaType<Pawn>();
+    }
 }
 
 void Roster::onMemberDestroyed(QObject *obj)

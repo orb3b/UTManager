@@ -22,11 +22,11 @@ bool PawnCollection::open(const QString &path)
     PawnGroup *testGroup[2];
 
     testGroup[0] = new PawnGroup("Angels", Pawn::Blue);
-    testGroup[0]->addMember(Pawn("Ivana"));
-    testGroup[0]->addMember(Pawn("Alena"));
-    testGroup[0]->addMember(Pawn("Freylis"));
+    testGroup[0]->addMember(Pawn("Ivana", Pawn::Blue));
+    testGroup[0]->addMember(Pawn("Alena", Pawn::Blue));
+    testGroup[0]->addMember(Pawn("Freylis", Pawn::Blue));
 
-    testGroup[0] = new PawnGroup("Legion");
+    testGroup[1] = new PawnGroup("Legion", Pawn::Red);
     testGroup[1]->addMember(Pawn("Berserker"));
     testGroup[1]->addMember(Pawn("Devastator"));
     testGroup[1]->addMember(Pawn("WarCow"));

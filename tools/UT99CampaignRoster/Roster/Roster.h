@@ -3,8 +3,8 @@
 
 #include "RosterObject.h"
 
-class PawnCollection;
-class TeamCollection;
+#include "PawnCollection.h"
+#include "TeamCollection.h"
 
 class Roster : public RosterObject
 {
@@ -19,6 +19,9 @@ public:
 signals:
 
 public slots:
+
+private:
+    void registerMetatypes();
 
 private slots:
     void onMemberDestroyed(QObject *obj);
