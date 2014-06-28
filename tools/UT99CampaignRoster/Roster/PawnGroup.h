@@ -1,14 +1,21 @@
 #ifndef PAWNGROUP_H
 #define PAWNGROUP_H
 
-#include <QObject>
+/*
+ * Container for pawns
+ * NOTE: It check that pawns passed to it aren't Null, i. e. pawn.isNull() should return false
+ *
+*/
+
+#include "RosterObject.h"
+
 #include <QList>
 #include <QString>
 #include <QStringList>
 
 #include "Pawn.h"
 
-class PawnGroup : public QObject
+class PawnGroup : public RosterObject
 {    
     Q_OBJECT
 public:
@@ -17,26 +24,42 @@ public:
 
     // Group properties
 
+    // Group's name
     QString name() const;
-    void setName(const QString &name);
+    bool setName(const QString &name);
 
+    // Group's default team
+    // If defaultTeam != None all pawns in group will belong to defaultTeam
+    // Changing team for group causes changing team for all pawns in it
     Pawn::Team defaultTeam() const;
-    void setDefaultTeam(Pawn::Team team);
+    bool setDefaultTeam(Pawn::Team team);
 
     // Member properties
+    // Member passed will be checked for Null property
 
-    void addMember(const Pawn &member);
+    virtual bool addMember(const Pawn &member);
     bool addMemberIfNotExist(const Pawn &member);
-    void removeMember(const Pawn &member);
+    bool removeMember(const Pawn &member);
     Pawn takeMember(const QString &memberName);
 
-    bool contains(const Pawn &member);
+    bool contains(const Pawn &member) const;
     Pawn getMember(const QString &name) const;
-    void setMember(const Pawn &member);
+    const QList<Pawn> &allMembers() const;
+    bool setMember(const Pawn &member);
 
     QStringList getMemberNames() const;
 
     int size() const;
+
+signals:
+    void memberAdded(Pawn member);
+    void memberRemoved(Pawn member);
+    void memberChanged(Pawn member);
+
+protected:
+    virtual void logError(const QString &text) const OVERWRITE;
+    virtual void logMessage(const QString &text) const OVERWRITE;
+    virtual void logSuccess(const QString &text) const OVERWRITE;
 
 private:
     QString m_name;

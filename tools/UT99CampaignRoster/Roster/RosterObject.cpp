@@ -7,39 +7,59 @@ RosterObject::RosterObject(QObject *parent) :
 {
 }
 
-bool RosterObject::isError()
+bool RosterObject::isError() const
 {
     return !m_lastError.isEmpty();
 }
 
-QString RosterObject::lastError()
+QString RosterObject::lastError() const
 {
     return m_lastError;
 }
 
-bool RosterObject::postError(const QString &text)
+void RosterObject::clearError() const
+{
+    m_lastError.clear();
+}
+
+void RosterObject::logError(const QString &text) const
+{
+    sLogErr << QString("[%1] %2").arg(_CLASS_NAME_, text);
+}
+
+void RosterObject::logMessage(const QString &text) const
+{
+    sLogDbg << QString("[%1] %2").arg(_CLASS_NAME_, text);
+}
+
+void RosterObject::logSuccess(const QString &text) const
+{
+    sLogMsg << QString("[%1] %2").arg(_CLASS_NAME_, text);
+}
+
+bool RosterObject::postError(const QString &text) const
 {
     m_lastError = text;
 
-    sLogErr << text;
+    logError(text);
 
     emit error(text);
 
     return false;
 }
 
-void RosterObject::postMessage(const QString &text)
+void RosterObject::postMessage(const QString &text) const
 {
-    sLogDbg << text;
+    logMessage(text);
 
     emit message(text);
 }
 
-bool RosterObject::postSuccess(const QString &text)
+bool RosterObject::postSuccess(const QString &text) const
 {
-    m_lastError.clear();
+    clearError();
 
-    sLogMsg << text;
+    logSuccess(text);
 
     emit success(text);
 

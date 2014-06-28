@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#define OWNERSHIP
+#include "CodeStyle.h"
 
 class RosterObject : public QObject
 {
@@ -11,21 +11,28 @@ class RosterObject : public QObject
 public:
     RosterObject(QObject *parent = 0);
 
-    virtual bool isError();
-    virtual QString lastError();
+    virtual bool isError() const;
+    virtual QString lastError() const;
+    virtual void clearError() const;
 
 signals:
-    void error(const QString &text);
-    void message(const QString &text);
-    void success(const QString &text);
-
-protected slots:
-    virtual bool postError(const QString &text);
-    virtual void postMessage(const QString &text);
-    virtual bool postSuccess(const QString &text = QString());
+    void error(const QString &text) const;
+    void message(const QString &text) const;
+    void success(const QString &text) const;
 
 protected:
-    QString m_lastError;
+    virtual void logError(const QString &text) const;
+    virtual void logMessage(const QString &text) const;
+    virtual void logSuccess(const QString &text) const;
+
+protected slots:
+    virtual bool postError(const QString &text) const;
+    virtual void postMessage(const QString &text) const;
+    virtual bool postSuccess(const QString &text = QString()) const;
+
+protected:
+    // Mutable for clearError function
+    mutable QString m_lastError;
 
 };
 

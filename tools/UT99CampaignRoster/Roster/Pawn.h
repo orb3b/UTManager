@@ -23,8 +23,8 @@ public:
     Pawn(const Pawn &other);
 
     // Validity
-    bool isValid() const;
-    static Pawn Invalid();
+    bool isNull() const;
+    static Pawn Null();
 
     // Changed property - true if any setter was called
     bool changed() const;
@@ -51,7 +51,7 @@ private:
     static void registerPawnMetatype();
 
 private:
-    bool m_valid;
+    bool m_null;
     bool m_changed;
 
     QString m_name;

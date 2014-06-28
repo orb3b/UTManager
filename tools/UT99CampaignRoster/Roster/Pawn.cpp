@@ -1,7 +1,7 @@
 #include "Pawn.h"
 
 Pawn::Pawn(const QString &name, Pawn::Team pawnTeam, uint pawnLives) :
-    m_valid(true),
+    m_null(false),
     m_name(name),
     m_team(pawnTeam),
     m_lives(pawnLives),
@@ -15,15 +15,15 @@ Pawn::Pawn(const Pawn &other)
     copy(other);
 }
 
-bool Pawn::isValid() const
+bool Pawn::isNull() const
 {
-    return m_valid;
+    return m_null;
 }
 
-Pawn Pawn::Invalid()
+Pawn Pawn::Null()
 {
     Pawn p;
-    p.m_valid = false;
+    p.m_null = true;
     return p;
 }
 
@@ -84,7 +84,7 @@ Pawn Pawn::operator =(const Pawn &other)
 
 void Pawn::copy(const Pawn &other)
 {
-    m_valid = other.m_valid;
+    m_null = other.m_null;
     m_changed = other.m_changed;
 
     m_name = other.m_name;

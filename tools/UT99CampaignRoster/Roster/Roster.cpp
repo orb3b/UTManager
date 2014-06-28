@@ -28,6 +28,14 @@ Roster::~Roster()
     }
 }
 
+bool Roster::openProject(const QString &path)
+{
+    if (!pawnCollection()->open(path))
+        return postError(QString("Can't open pawn collection: %1").arg(pawnCollection()->lastError()));
+
+    return postSuccess(QString("Roster project %1 have been opened successfully"));
+}
+
 PawnCollection *Roster::pawnCollection()
 {
     if (!m_pawnCollection)

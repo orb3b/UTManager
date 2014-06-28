@@ -155,7 +155,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
    <property name="text">
-    <string>Open</string>
+    <string>Open project</string>
    </property>
   </action>
   <action name="actionQuit">

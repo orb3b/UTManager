@@ -15,11 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->cbPawnGroups, SIGNAL(currentIndexChanged(QString)), SLOT(uiLoadGroupMembers()));
 
     // ui - Buttons
-    connect(ui->btnAddPawnToTeam, SIGNAL(clicked()), SLOT(onMovePawnToTeamClicked()));
-    connect(ui->btnRemovePawnFromTeam, SIGNAL(clicked()), SLOT(onDeletePawnToTeamClicked()));
+    connect(ui->btnAddPawnToTeam, SIGNAL(clicked()), SLOT(uiOnMovePawnToTeamClicked()));
+    connect(ui->btnRemovePawnFromTeam, SIGNAL(clicked()), SLOT(uiOnDeletePawnToTeamClicked()));
     ui->btnGenerate->addAction(ui->actionGenerate_Unreal_ini);
 
     // ui - Lists
+    connect(ui->lwPawnGroupMembers, SIGNAL(itemDoubleClicked(QListWidgetItem *)), SLOT(uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *)));
 
     // ui - Group editor
     //connect(ui->actionPawn_groups_editor, )
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // configure roster
     m_roster = new Roster();
 
-    connect(ui->actionOpen, SIGNAL(triggered()), SLOT(uiOpenPawnCollection()));
+    connect(ui->actionOpen, SIGNAL(triggered()), SLOT(uiOpenProject()));
     connect(ui->actionGenerate_Unreal_ini, SIGNAL(triggered()), m_roster->teamCollection(), SLOT(exportToIni()));
 
     connect(m_roster->pawnCollection(), SIGNAL(groupAdded(QString)), SLOT(onGroupAdded(QString)), Qt::QueuedConnection);
@@ -62,7 +63,7 @@ bool MainWindow::postError(const QString &text)
     return false;
 }
 
-QString MainWindow::nameFromShortDescription(const QString &description)
+QString MainWindow::nameFromShortDescription(const QString &description) const
 {
     QString result = description;
     if (result.endsWith("*"))
@@ -75,7 +76,7 @@ QString MainWindow::nameFromShortDescription(const QString &description)
     return result.right(result.size() - pos - 1);
 }
 
-QString MainWindow::toShortDescription(const Pawn &member)
+QString MainWindow::toShortDescription(const Pawn &member) const
 {
     return QString("%1_%2%3")
             .arg(member.lives())
@@ -83,7 +84,7 @@ QString MainWindow::toShortDescription(const Pawn &member)
             .arg(member.changed() ? "*" : "");
 }
 
-QColor MainWindow::teamColor(const Pawn &member)
+QColor MainWindow::teamColor(const Pawn &member) const
 {
     switch(member.team()){
     case Pawn::Red:
@@ -101,26 +102,53 @@ QColor MainWindow::teamColor(const Pawn &member)
     return QColor(Qt::black);
 }
 
-void MainWindow::uiOpenPawnCollection()
+PawnGroup *MainWindow::uiGetCurrentGroup()
 {
-    if (!m_roster->pawnCollection()->open("PawnCollection.ini"))
-        postError(QString("Can't open pawn collection: %1").arg(m_roster->pawnCollection()->lastError()));
+    PawnGroup *group = m_roster->pawnCollection()->getGroup(ui->cbPawnGroups->currentText());
+    if (!group) {
+        postError("Invalid group selected!");
+        return nullptr;
+    }
+
+    return group;
 }
 
-void MainWindow::onGroupAdded(QString groupName)
+Pawn MainWindow::uiGetMemberFromItem(const PawnGroup *group, const QListWidgetItem *item)
 {
-    ui->cbPawnGroups->addItem(groupName);
+    if (!group) {
+        postError("Invalid group selected!");
+        return Pawn::Null();;
+    }
+
+    if (!item) {
+        postError("Invalid item selected");
+        return Pawn::Null();
+    }
+
+    Pawn member = group->getMember(nameFromShortDescription(item->text()));
+    if (member.isNull())
+        postError("Invalid member selected");
+
+    return member;
 }
 
-void MainWindow::onGroupRemoved(QString groupName)
+QListWidgetItem *MainWindow::itemFromPawn(const Pawn &pawn)
 {
-    ui->cbPawnGroups->removeItem(ui->cbPawnGroups->findText(groupName));
+    if (pawn.isNull())
+        return nullptr;
+
+    QListWidgetItem *item = new QListWidgetItem();
+
+    item->setText(toShortDescription(pawn));
+    item->setForeground(QBrush(teamColor(pawn)));
+
+    return item;
 }
 
-void MainWindow::onGroupChanged(QString groupName)
+void MainWindow::uiOpenProject()
 {
-    if (ui->cbPawnGroups->currentText() == groupName)
-        uiLoadGroupMembers();
+    if (!m_roster->openProject("Project.ini"))
+        postError(QString("Can't open project: %1").arg(m_roster->pawnCollection()->lastError()));
 }
 
 void MainWindow::uiLoadGroupMembers()
@@ -137,23 +165,23 @@ void MainWindow::uiLoadGroupMembers()
         ui->lwPawnGroupMembers->addItem(memberName);
 }
 
-void MainWindow::onTeamMemberAdded(Pawn member)
+void MainWindow::uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *item)
 {
-    QListWidgetItem *item = new QListWidgetItem();
+    if (!item)
+        return;
 
-    item->setText(toShortDescription(member));
-    item->setForeground(QBrush(teamColor(member)));
+    PawnGroup *currentGroup = uiGetCurrentGroup();
+    if (!currentGroup)
+        return;
 
-    ui->lwTeamMembers->addItem(item);
+    Pawn member = uiGetMemberFromItem(currentGroup, item);
+    if (member.isNull())
+        return;
+
+    //m_pawnEditor->open(PawnEditor::EditGroupMember, member)
 }
 
-void MainWindow::onTeamMemberRemoved(Pawn member)
-{
-    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(toShortDescription(member.name()), Qt::MatchExactly))
-        delete item;
-}
-
-void MainWindow::onMovePawnToTeamClicked()
+void MainWindow::uiOnMovePawnToTeamClicked()
 {
     QList<QListWidgetItem *> selected = ui->lwPawnGroupMembers->selectedItems();
     if (selected.isEmpty()) {
@@ -161,18 +189,14 @@ void MainWindow::onMovePawnToTeamClicked()
         return;
     }
 
-    PawnGroup *group = m_roster->pawnCollection()->getGroup(ui->cbPawnGroups->currentText());
-    if (!group) {
-        postError("MainWindow::onMovePawnToTeamClicked invalid group selected!");
+    PawnGroup *group = uiGetCurrentGroup();
+    if (!group)
         return;
-    }
 
     foreach(QListWidgetItem *item, selected) {
-        Pawn newMember = group->getMember(nameFromShortDescription(item->text()));
-        if (!newMember.isValid()) {
-            postError("MainWindow::onMovePawnToTeamClicked invalid member selected!");
-            continue;
-        }
+        Pawn newMember = uiGetMemberFromItem(group, item);
+        if (newMember.isNull())
+            continue;        
 
         if (!m_roster->teamCollection()->addMember(newMember)) {
             postError(QString("Can't add member to team: %1").arg(m_roster->teamCollection()->lastError()));
@@ -183,7 +207,7 @@ void MainWindow::onMovePawnToTeamClicked()
     // list will be updated when signal memberAdded will come from teamCollection
 }
 
-void MainWindow::onDeletePawnToTeamClicked()
+void MainWindow::uiOnDeletePawnToTeamClicked()
 {
     QList<QListWidgetItem *> selected = ui->lwTeamMembers->selectedItems();
     foreach(QListWidgetItem *item, selected) {
@@ -194,6 +218,33 @@ void MainWindow::onDeletePawnToTeamClicked()
     }
 
     // list will be updated when signal memberRemoved will come from teamCollection
+}
+
+void MainWindow::onTeamMemberAdded(Pawn member)
+{
+    ui->lwTeamMembers->addItem(itemFromPawn(member));
+}
+
+void MainWindow::onTeamMemberRemoved(Pawn member)
+{
+    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(toShortDescription(member.name()), Qt::MatchExactly))
+        delete item;
+}
+
+void MainWindow::onGroupAdded(QString groupName)
+{
+    ui->cbPawnGroups->addItem(groupName);
+}
+
+void MainWindow::onGroupRemoved(QString groupName)
+{
+    ui->cbPawnGroups->removeItem(ui->cbPawnGroups->findText(groupName));
+}
+
+void MainWindow::onGroupChanged(QString groupName)
+{
+    if (ui->cbPawnGroups->currentText() == groupName)
+        uiLoadGroupMembers();
 }
 
 void MainWindow::onRosterError(const QString &text)

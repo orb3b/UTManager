@@ -1,11 +1,9 @@
 #ifndef TEAMCOLLECTION_H
 #define TEAMCOLLECTION_H
 
-#include "RosterObject.h"
-
 #include "PawnGroup.h"
 
-class TeamCollection : public RosterObject
+class TeamCollection : public PawnGroup
 {
     Q_OBJECT
 public:
@@ -14,8 +12,7 @@ public:
     TeamCollection(QObject *parent = 0);
 
     // Member managment functions
-    bool addMember(const Pawn &member);
-    bool removeMember(const QString &member);
+    bool addMember(const Pawn &member) OVERWRITE;
 
     // Export parameters
     QString exportPath() const;
@@ -24,12 +21,7 @@ public:
 public slots:
     bool exportToIni();
 
-signals:
-    void memberAdded(Pawn member);
-    void memberRemoved(Pawn member);
-
-private:
-    PawnGroup m_configuredTeam;
+private:    
     QString m_exportPath;
 
 };

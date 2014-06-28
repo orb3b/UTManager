@@ -25,8 +25,8 @@ signals:
     void groupChanged(QString groupName);
 
 private:
-    bool addGroup_P(OWNERSHIP PawnGroup *group);
-    bool removeGroup_P(PawnGroup *group);
+    bool addGroupPrivate(OWNERSHIP PawnGroup *group);
+    bool removeGroupPrivate(PawnGroup *group);
 
 private slots:
     void onMemberGroupDestroyed(QObject *obj);

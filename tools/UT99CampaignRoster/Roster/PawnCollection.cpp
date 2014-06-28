@@ -50,7 +50,7 @@ PawnGroup *PawnCollection::getGroup(const QString &groupName)
 
 bool PawnCollection::addGroup(PawnGroup *group)
 {
-    if (!addGroup_P(group))
+    if (!addGroupPrivate(group))
         return false;
 
     emit groupAdded(group->name());
@@ -58,7 +58,7 @@ bool PawnCollection::addGroup(PawnGroup *group)
     return postSuccess(QString("Group %1 was successfully added").arg(group->name()));
 }
 
-bool PawnCollection::addGroup_P(PawnGroup *group)
+bool PawnCollection::addGroupPrivate(PawnGroup *group)
 {
     if (!group)
         return postError("Can't add null pointer group");
@@ -70,7 +70,7 @@ bool PawnCollection::addGroup_P(PawnGroup *group)
     return true;
 }
 
-bool PawnCollection::removeGroup_P(PawnGroup *group)
+bool PawnCollection::removeGroupPrivate(PawnGroup *group)
 {
     if (!group)
         return postError("Can't remove null pointer group");

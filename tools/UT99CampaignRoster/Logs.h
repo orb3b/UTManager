@@ -6,8 +6,13 @@
 
 #define VERSION "1.0"
 
-#define sLogDbg qDebug().nospace()
-#define sLogMsg qWarning().nospace()
-#define sLogErr qCritical().nospace()
+#define sBaseLogDbg qDebug().nospace()
+#define sBaseLogMsg qWarning().nospace()
+#define sBaseLogErr qCritical().nospace()
+
+#define sLogDbg (sBaseLogDbg << "[DEBUG][" << __FUNCTION__ << "]")
+#define sLogMsg (sBaseLogMsg << "[MESSAGE]")
+#define sLogErr (sBaseLogErr << "[ERROR]")
+
 
 #endif // LOGS_H

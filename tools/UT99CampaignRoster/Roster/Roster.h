@@ -13,6 +13,8 @@ public:
     Roster(QObject *parent = 0);
     ~Roster();
 
+    bool openProject(const QString &path);
+
     PawnCollection *pawnCollection();
     TeamCollection *teamCollection();
 
