@@ -35,3 +35,6 @@ HEADERS  += MainWindow.h \
     ../../src/CodeStyle.h
 
 FORMS    += MainWindow.ui
+
+RESOURCES += \
+    RosterResources.qrc

@@ -161,8 +161,8 @@ void MainWindow::uiLoadGroupMembers()
 
     ui->lwPawnGroupMembers->clear();
 
-    foreach(QString memberName, group->getMemberNames())
-        ui->lwPawnGroupMembers->addItem(memberName);
+    foreach(const Pawn &member, group->allMembers())
+        ui->lwPawnGroupMembers->addItem(itemFromPawn(member));
 }
 
 void MainWindow::uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *item)

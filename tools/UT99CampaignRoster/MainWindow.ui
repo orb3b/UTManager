@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UT99 Campaign Roster</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="RosterResources.qrc">
+    <normaloff>:/images/icon</normaloff>:/images/icon</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -175,6 +179,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="RosterResources.qrc"/>
+ </resources>
  <connections/>
 </ui>
