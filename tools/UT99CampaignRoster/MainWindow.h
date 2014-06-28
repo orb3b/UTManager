@@ -5,6 +5,7 @@
 #include <QString>
 
 #include "Roster/Roster.h"
+#include "PawnEditor.h"
 
 class QAction;
 class QListWidgetItem;
@@ -29,10 +30,15 @@ private:
     QString toShortDescription(const Pawn &member) const;
     QColor teamColor(const Pawn &member) const;
 
+    QListWidgetItem *itemFromPawn(const Pawn &pawn);
+    void updateItem(QListWidgetItem *item, const Pawn &pawn);
+
     // Ui - private
     PawnGroup *uiGetCurrentGroup();
     Pawn uiGetMemberFromItem(const PawnGroup *group, const QListWidgetItem *item);
-    QListWidgetItem *itemFromPawn(const Pawn &pawn);
+
+    void uiEditItem(QListWidgetItem *item, PawnEditor::EditorMode mode);
+
 
 private slots:
     // Commands from ui
@@ -41,6 +47,7 @@ private slots:
     void uiLoadGroupMembers();
 
     void uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *item);
+    void uiOnTeamMemberDoubleClicked(QListWidgetItem *item);
 
     void uiOnMovePawnToTeamClicked();
     void uiOnDeletePawnToTeamClicked();
@@ -52,11 +59,13 @@ private slots:
 
     void onTeamMemberAdded(Pawn member);
     void onTeamMemberRemoved(Pawn member);
+    void onTeamMemberChanged(Pawn oldMember, Pawn newMember);
 
     void onRosterError(const QString &text);
 
 private:
     Ui::MainWindow *ui;
+    PawnEditor *m_pawnEditor;
 
     Roster *m_roster;
 };

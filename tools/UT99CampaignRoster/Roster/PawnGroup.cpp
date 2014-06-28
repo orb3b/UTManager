@@ -47,7 +47,24 @@ bool PawnGroup::setDefaultTeam(Pawn::Team team)
 
 bool PawnGroup::addMember(const Pawn &member)
 {
-    return setMember(member);
+    if (member.isNull())
+        return postError("Can't add member: member is null");
+
+    int index = m_pawnList.indexOf(member);
+    if (index < 0) {
+        m_pawnList.append(member);
+
+        emit memberAdded(member);
+
+        return postSuccess(QString("Member %1 have been successfully added").arg(member.name()));
+    }
+
+    Pawn old = m_pawnList[index];
+    m_pawnList[index] = member;
+
+    emit memberChanged(old, member);
+
+    return postSuccess(QString("Member %1 (new: %2) have been set successfully").arg(old.name(), member.name()));
 }
 
 bool PawnGroup::addMemberIfNotExist(const Pawn &member)
@@ -66,9 +83,11 @@ bool PawnGroup::removeMember(const Pawn &member)
     if (member.isNull())
         return postError("Can't remove member: member is Null");
 
-    m_pawnList.removeAll(member);
+    int index = m_pawnList.indexOf(member);
+    if (index < 0)
+        return postError(QString("Can't remove member %1: member didn't exist").arg(member.name()));
 
-    emit memberRemoved(member);
+    emit memberRemoved(m_pawnList.takeAt(index));
 
     return postSuccess(QString("Member %1 have been removed successfully").arg(member.name()));
 }
@@ -115,30 +134,21 @@ const QList<Pawn> &PawnGroup::allMembers() const
     return m_pawnList;
 }
 
-bool PawnGroup::setMember(const Pawn &member)
+bool PawnGroup::setMember(const QString &name, const Pawn &member)
 {
     if (member.isNull())
-        return postError("Can't set null member");
+        return postError("Can't set member: new member is null");
 
-    int index = m_pawnList.indexOf(member);
-    // Adding member
-    if (index < 0) {
-        m_pawnList.append(member);
-        if (m_defaultTeam != Pawn::None)
-            m_pawnList.last().setTeam(m_defaultTeam);
+    int index = m_pawnList.indexOf(Pawn(name));
+    if (index < 0)
+        return postError(QString("Member with name %1 doesn't exists").arg(name));
 
-        emit memberAdded(member);
-
-        return postSuccess(QString("Member %1 have been added successfully").arg(member.name()));
-    }
-
+    Pawn old = m_pawnList[index];
     m_pawnList[index] = member;
-    if (m_defaultTeam != Pawn::None)
-        m_pawnList[index].setTeam(m_defaultTeam);
 
-    emit memberChanged(member);
+    emit memberChanged(old, member);
 
-    return postSuccess(QString("Member %1 have been set successfully").arg(member.name()));
+    return postSuccess(QString("Member %1 (new: %2) have been set successfully").arg(name, member.name()));
 }
 
 QStringList PawnGroup::getMemberNames() const

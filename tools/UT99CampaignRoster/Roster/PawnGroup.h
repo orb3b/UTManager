@@ -40,12 +40,12 @@ public:
     virtual bool addMember(const Pawn &member);
     bool addMemberIfNotExist(const Pawn &member);
     bool removeMember(const Pawn &member);
-    Pawn takeMember(const QString &memberName);
+    Pawn takeMember(const QString &memberName);    
 
     bool contains(const Pawn &member) const;
     Pawn getMember(const QString &name) const;
     const QList<Pawn> &allMembers() const;
-    bool setMember(const Pawn &member);
+    bool setMember(const QString &name, const Pawn &member);
 
     QStringList getMemberNames() const;
 
@@ -54,7 +54,7 @@ public:
 signals:
     void memberAdded(Pawn member);
     void memberRemoved(Pawn member);
-    void memberChanged(Pawn member);
+    void memberChanged(Pawn oldPawn, Pawn newPawn);
 
 protected:
     virtual void logError(const QString &text) const OVERWRITE;

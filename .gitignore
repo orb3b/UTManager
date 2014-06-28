@@ -12,6 +12,10 @@
 *.la
 *.a
 
+# Visual studio auxiliary files
+*.user
+*.user.*
+
 # Ignore unimportant directories
 bin
 build

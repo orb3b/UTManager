@@ -22,11 +22,16 @@ MainWindow::MainWindow(QWidget *parent) :
     // ui - Lists
     connect(ui->lwPawnGroupMembers, SIGNAL(itemDoubleClicked(QListWidgetItem *)), SLOT(uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *)));
 
+    connect(ui->lwTeamMembers, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(uiOnTeamMemberDoubleClicked(QListWidgetItem*)));
+
     // ui - Group editor
     //connect(ui->actionPawn_groups_editor, )
 
     // ui -> Actions
     ui->actionOpen->setShortcut(QKeySequence(tr("Ctrl+O")));
+
+    // ui - Editors
+    m_pawnEditor = new PawnEditor(this);
 
     // configure roster
     m_roster = new Roster();
@@ -40,8 +45,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m_roster->teamCollection(), SIGNAL(memberAdded(Pawn)), SLOT(onTeamMemberAdded(Pawn)), Qt::QueuedConnection);
     connect(m_roster->teamCollection(), SIGNAL(memberRemoved(Pawn)), SLOT(onTeamMemberRemoved(Pawn)), Qt::QueuedConnection);
+    connect(m_roster->teamCollection(), SIGNAL(memberChanged(Pawn,Pawn)), SLOT(onTeamMemberChanged(Pawn, Pawn)), Qt::QueuedConnection);
 
     connect(ui->actionQuit, SIGNAL(triggered()), SLOT(close()));
+
+    uiOpenProject();
 }
 
 MainWindow::~MainWindow()
@@ -102,6 +110,30 @@ QColor MainWindow::teamColor(const Pawn &member) const
     return QColor(Qt::black);
 }
 
+QListWidgetItem *MainWindow::itemFromPawn(const Pawn &pawn)
+{
+    if (pawn.isNull())
+        return nullptr;
+
+    QListWidgetItem *item = new QListWidgetItem();
+
+    updateItem(item, pawn);
+
+    return item;
+}
+
+void MainWindow::updateItem(QListWidgetItem *item, const Pawn &pawn)
+{
+    if (!item)
+        return;
+
+    if (pawn.isNull())
+        return;
+
+    item->setText(toShortDescription(pawn));
+    item->setForeground(QBrush(teamColor(pawn)));
+}
+
 PawnGroup *MainWindow::uiGetCurrentGroup()
 {
     PawnGroup *group = m_roster->pawnCollection()->getGroup(ui->cbPawnGroups->currentText());
@@ -132,17 +164,33 @@ Pawn MainWindow::uiGetMemberFromItem(const PawnGroup *group, const QListWidgetIt
     return member;
 }
 
-QListWidgetItem *MainWindow::itemFromPawn(const Pawn &pawn)
+void MainWindow::uiEditItem(QListWidgetItem *item, PawnEditor::EditorMode mode)
 {
-    if (pawn.isNull())
-        return nullptr;
+    if (!item)
+        return;
 
-    QListWidgetItem *item = new QListWidgetItem();
+    PawnGroup *currentGroup = mode == PawnEditor::EditGroupMember ? uiGetCurrentGroup() : m_roster->teamCollection();
+    if (!currentGroup)
+        return;
 
-    item->setText(toShortDescription(pawn));
-    item->setForeground(QBrush(teamColor(pawn)));
+    Pawn oldMember = uiGetMemberFromItem(currentGroup, item);
+    if (oldMember.isNull())
+        return;
 
-    return item;
+    m_pawnEditor->setMode(mode);
+    if (m_pawnEditor->execEditor(oldMember) == QDialog::Rejected)
+        return;
+
+    // Accepted
+    if (!currentGroup->setMember(oldMember.name(), m_pawnEditor->getMember())){
+        postError(QString("Can't save group %1 member: %2").arg(currentGroup->name(), currentGroup->lastError()));
+        return;
+    }
+
+    if (mode == PawnEditor::EditGroupMember)
+        uiLoadGroupMembers();
+
+    // team list will be updated by signals
 }
 
 void MainWindow::uiOpenProject()
@@ -167,18 +215,12 @@ void MainWindow::uiLoadGroupMembers()
 
 void MainWindow::uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *item)
 {
-    if (!item)
-        return;
+    uiEditItem(item, PawnEditor::EditGroupMember);
+}
 
-    PawnGroup *currentGroup = uiGetCurrentGroup();
-    if (!currentGroup)
-        return;
-
-    Pawn member = uiGetMemberFromItem(currentGroup, item);
-    if (member.isNull())
-        return;
-
-    //m_pawnEditor->open(PawnEditor::EditGroupMember, member)
+void MainWindow::uiOnTeamMemberDoubleClicked(QListWidgetItem *item)
+{
+    uiEditItem(item, PawnEditor::EditTeamMember);
 }
 
 void MainWindow::uiOnMovePawnToTeamClicked()
@@ -227,8 +269,14 @@ void MainWindow::onTeamMemberAdded(Pawn member)
 
 void MainWindow::onTeamMemberRemoved(Pawn member)
 {
-    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(toShortDescription(member.name()), Qt::MatchExactly))
+    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(toShortDescription(member), Qt::MatchExactly))
         delete item;
+}
+
+void MainWindow::onTeamMemberChanged(Pawn oldMember, Pawn newMember)
+{
+    foreach(QListWidgetItem *item, ui->lwTeamMembers->findItems(toShortDescription(oldMember), Qt::MatchExactly))
+        updateItem(item, newMember);
 }
 
 void MainWindow::onGroupAdded(QString groupName)
