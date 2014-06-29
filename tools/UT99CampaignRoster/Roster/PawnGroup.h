@@ -58,6 +58,7 @@ signals:
 
 protected:
     virtual void logError(const QString &text) const OVERWRITE;
+    virtual void logWarning(const QString &text) const OVERWRITE;
     virtual void logMessage(const QString &text) const OVERWRITE;
     virtual void logSuccess(const QString &text) const OVERWRITE;
 

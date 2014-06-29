@@ -173,6 +173,11 @@ void PawnGroup::logError(const QString &text) const
     sLogErr << QString("[%1](%2) %3").arg(_CLASS_NAME_, m_name, text);
 }
 
+void PawnGroup::logWarning(const QString &text) const
+{
+    sLogWrn << QString("[%1](%2) %3").arg(_CLASS_NAME_, m_name, text);
+}
+
 void PawnGroup::logMessage(const QString &text) const
 {
     sLogDbg << QString("[%1](%2) %3").arg(_CLASS_NAME_, m_name, text);

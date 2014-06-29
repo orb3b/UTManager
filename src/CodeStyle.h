@@ -4,6 +4,6 @@
 #define OWNERSHIP
 #define OVERWRITE
 
-#define _CLASS_NAME_ metaObject()->className()
+#define _CLASS_NAME_ typeid(*this).name()
 
 #endif // CODESTYLE_H

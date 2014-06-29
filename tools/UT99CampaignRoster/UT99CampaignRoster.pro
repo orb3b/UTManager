@@ -23,7 +23,12 @@ SOURCES += main.cpp\
     Roster/PawnGroup.cpp \
     Roster/Pawn.cpp \
     Roster/TeamCollection.cpp \
-    PawnEditor.cpp
+    PawnEditor.cpp \
+    PawnGroupsWidget.cpp \
+    PawnConverter.cpp \
+    Roster/RosterComponent.cpp \
+    TeamMembersWidget.cpp \
+    InteractionWidget.cpp
 
 HEADERS  += MainWindow.h \
     Logs.h \
@@ -34,10 +39,18 @@ HEADERS  += MainWindow.h \
     Roster/Pawn.h \
     Roster/TeamCollection.h \
     ../../src/CodeStyle.h \
-    PawnEditor.h
+    PawnEditor.h \
+    PawnGroupsWidget.h \
+    PawnConverter.h \
+    Roster/RosterComponent.h \
+    TeamMembersWidget.h \
+    InteractionWidget.h
 
 FORMS    += MainWindow.ui \
-    PawnEditor.ui
+    PawnEditor.ui \
+    PawnGroupsWidget.ui \
+    TeamMembersWidget.ui \
+    InteractionWidget.ui
 
 RESOURCES += \
     RosterResources.qrc

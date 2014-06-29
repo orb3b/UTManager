@@ -5,7 +5,7 @@
 
 #include <QList>
 
-class PawnGroup;
+#include "PawnGroup.h"
 
 class PawnCollection : public RosterObject
 {

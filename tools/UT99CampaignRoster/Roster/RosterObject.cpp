@@ -1,67 +1,27 @@
 #include "RosterObject.h"
 
-#include "Logs.h"
-
 RosterObject::RosterObject(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    RosterComponent()
 {
 }
 
-bool RosterObject::isError() const
+void RosterObject::notifyError(const QString & text) const
 {
-    return !m_lastError.isEmpty();
-}
-
-QString RosterObject::lastError() const
-{
-    return m_lastError;
-}
-
-void RosterObject::clearError() const
-{
-    m_lastError.clear();
-}
-
-void RosterObject::logError(const QString &text) const
-{
-    sLogErr << QString("[%1] %2").arg(_CLASS_NAME_, text);
-}
-
-void RosterObject::logMessage(const QString &text) const
-{
-    sLogDbg << QString("[%1] %2").arg(_CLASS_NAME_, text);
-}
-
-void RosterObject::logSuccess(const QString &text) const
-{
-    sLogMsg << QString("[%1] %2").arg(_CLASS_NAME_, text);
-}
-
-bool RosterObject::postError(const QString &text) const
-{
-    m_lastError = text;
-
-    logError(text);
-
     emit error(text);
-
-    return false;
 }
 
-void RosterObject::postMessage(const QString &text) const
+void RosterObject::notifyWarning(const QString &text) const
 {
-    logMessage(text);
+    emit warning(text);
+}
 
+void RosterObject::notifyMessage(const QString & text) const
+{
     emit message(text);
 }
 
-bool RosterObject::postSuccess(const QString &text) const
+void RosterObject::notifySuccess(const QString & text) const
 {
-    clearError();
-
-    logSuccess(text);
-
     emit success(text);
-
-    return true;
 }

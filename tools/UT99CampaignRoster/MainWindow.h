@@ -9,12 +9,16 @@
 
 class QAction;
 class QListWidgetItem;
+class PawnGroupsWidget;
+class TeamMembersWidget;
+class InteractionWidget;
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow,
+                   public RosterComponent
 {
     Q_OBJECT
 
@@ -23,49 +27,26 @@ public:
     ~MainWindow();
 
 protected:
-    virtual bool postError(const QString &text);
+    virtual void notifyError(const QString &text) const OVERWRITE;
+    virtual void notifyWarning(const QString &text) const OVERWRITE;
 
-private:
-    QString nameFromShortDescription(const QString &description) const;
-    QString toShortDescription(const Pawn &member) const;
-    QColor teamColor(const Pawn &member) const;
-
-    QListWidgetItem *itemFromPawn(const Pawn &pawn);
-    void updateItem(QListWidgetItem *item, const Pawn &pawn);
-
-    // Ui - private
-    PawnGroup *uiGetCurrentGroup();
-    Pawn uiGetMemberFromItem(const PawnGroup *group, const QListWidgetItem *item);
-
-    void uiEditItem(QListWidgetItem *item, PawnEditor::EditorMode mode);
-
+private:      
 
 private slots:
     // Commands from ui
-    void uiOpenProject();
+    void openProject();
 
-    void uiLoadGroupMembers();
-
-    void uiOnPawnGroupMemberDoubleClicked(QListWidgetItem *item);
-    void uiOnTeamMemberDoubleClicked(QListWidgetItem *item);
-
-    void uiOnMovePawnToTeamClicked();
-    void uiOnDeletePawnToTeamClicked();
-
-    // Events from roster
-    void onGroupAdded(QString groupName);
-    void onGroupRemoved(QString groupName);
-    void onGroupChanged(QString groupName);
-
-    void onTeamMemberAdded(Pawn member);
-    void onTeamMemberRemoved(Pawn member);
-    void onTeamMemberChanged(Pawn oldMember, Pawn newMember);
-
-    void onRosterError(const QString &text);
+    void addPawnToTeam();
+    void removePawnFromTeam();
 
 private:
     Ui::MainWindow *ui;
+
+    // Child widgets
     PawnEditor *m_pawnEditor;
+    PawnGroupsWidget *m_pawnGroupsWidget;
+    TeamMembersWidget *m_teamMembersWidget;
+    InteractionWidget *m_interactionWidget;
 
     Roster *m_roster;
 };

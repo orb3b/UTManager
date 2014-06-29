@@ -8,10 +8,12 @@
 
 #define sBaseLogDbg qDebug().nospace()
 #define sBaseLogMsg qWarning().nospace()
+#define sBaseLogWrn qWarning().nospace()
 #define sBaseLogErr qCritical().nospace()
 
 #define sLogDbg (sBaseLogDbg << "[DEBUG][" << __FUNCTION__ << "]")
 #define sLogMsg (sBaseLogMsg << "[MESSAGE]")
+#define sLogWrn (sBaseLogWrn << "[WARNING]")
 #define sLogErr (sBaseLogErr << "[ERROR]")
 
 
