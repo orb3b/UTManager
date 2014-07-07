@@ -28,7 +28,10 @@ SOURCES += main.cpp\
     PawnConverter.cpp \
     Roster/RosterComponent.cpp \
     TeamMembersWidget.cpp \
-    InteractionWidget.cpp
+    InteractionWidget.cpp \
+    Roster/RosterCollection.cpp \
+    Roster/ClassCollection.cpp \
+    Roster/MaterialCollection.cpp
 
 HEADERS  += MainWindow.h \
     Logs.h \
@@ -44,7 +47,10 @@ HEADERS  += MainWindow.h \
     PawnConverter.h \
     Roster/RosterComponent.h \
     TeamMembersWidget.h \
-    InteractionWidget.h
+    InteractionWidget.h \
+    Roster/RosterCollection.h \
+    Roster/ClassCollection.h \
+    Roster/MaterialCollection.h
 
 FORMS    += MainWindow.ui \
     PawnEditor.ui \

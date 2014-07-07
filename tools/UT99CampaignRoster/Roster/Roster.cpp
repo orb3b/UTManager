@@ -38,16 +38,20 @@ bool Roster::openProject(const QString &path)
 
 PawnCollection *Roster::pawnCollection()
 {
-    if (!m_pawnCollection)
+    if (!m_pawnCollection) {
         m_pawnCollection = new PawnCollection();
+        connect(m_pawnCollection, SIGNAL(destroyed(QObject*)), SLOT(onMemberDestroyed(QObject*)));
+    }
 
     return m_pawnCollection;
 }
 
 TeamCollection *Roster::teamCollection()
 {
-    if (!m_teamCollection)
+    if (!m_teamCollection) {
         m_teamCollection = new TeamCollection();
+        connect(m_teamCollection, SIGNAL(destroyed(QObject*)), SLOT(onMemberDestroyed(QObject*)));
+    }
 
     return m_teamCollection;
 }

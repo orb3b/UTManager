@@ -7,8 +7,10 @@
 
 PawnEditor::PawnEditor(QWidget *parent) :
     QDialog(parent),
+    RosterComponent(),
     ui(new Ui::PawnEditor),
-    m_mode(EditTeamMember)
+    m_mode(EditTeamMember),
+    m_materialCollection(nullptr)
 {
     ui->setupUi(this);
 
@@ -31,6 +33,19 @@ PawnEditor::PawnEditor(QWidget *parent) :
 PawnEditor::~PawnEditor()
 {
     delete ui;
+}
+
+void PawnEditor::setMaterialCollection(MaterialCollection *collection)
+{
+    if (m_materialCollection) {
+        disconnect(m_materialCollection, SIGNAL(destroyed(QObject*)), this, SLOT(onDestroyed(QObject*)));
+    }
+
+    m_materialCollection = collection;
+
+    connect(m_materialCollection, SIGNAL(destroyed(QObject*)), SLOT(onDestroyed(QObject*)));
+
+    fillMaterials();
 }
 
 Pawn PawnEditor::getMember() const
@@ -63,6 +78,22 @@ int PawnEditor::execEditor(const Pawn &member)
     return exec();
 }
 
+void PawnEditor::notifyError(const QString &text) const
+{
+    QMessageBox::critical(nullptr,
+                         "Error",
+                         text
+                         );
+}
+
+void PawnEditor::notifyWarning(const QString &text) const
+{
+    QMessageBox::warning(nullptr,
+                         "Warning",
+                         text
+                         );
+}
+
 void PawnEditor::changeUi()
 {
 
@@ -77,14 +108,47 @@ void PawnEditor::fillUi(const Pawn &member)
     ui->sbLives->setValue(member.lives());
 }
 
-bool PawnEditor::postError(const QString &text)
+void PawnEditor::fillMaterials()
 {
-    sLogErr << text;
+    if (!m_materialCollection)
+        return;
 
-    QMessageBox::warning(this,
-                         tr("Error"),
-                         text
-                         );
+    if (m_materialCollection->classCollection()->size() < 1)
+        return;
 
-    return false;
+    ui->cbClasses->clear();
+
+    foreach(PawnClass *pawnClass, m_materialCollection->classCollection()->allClasses())
+        ui->cbClasses->addItem(pawnClass->description());
+
+    fillSkins(m_materialCollection->classCollection()->first());
+    fillFaces(m_materialCollection->classCollection()->first()->skinCollection());
+}
+
+void PawnEditor::fillSkins(PawnClass *pawnClass)
+{
+    if (!pawnClass)
+        return;
+
+    ui->cbSkins->clear();
+
+    foreach(PawnSkin *skin, pawnClass->skinCollection()->all())
+        ui->cbSkins->addItem(skin->description());
+}
+
+void PawnEditor::fillFaces(PawnSkin *skin)
+{
+    if (!skin)
+        return;
+
+    ui->cbFaces->clear();
+
+    foreach(PawnFace *face, skin->faceCollection()->all())
+        ui->cbSkins->addItem(face->description());
+}
+
+void PawnEditor::onDestroyed(QObject *obj)
+{
+    if (obj == m_materialCollection)
+        m_materialCollection = nullptr;
 }
