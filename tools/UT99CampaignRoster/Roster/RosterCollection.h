@@ -4,32 +4,38 @@
 #include "RosterObject.h"
 
 #include <QList>
+#include <QObject>
 
-class RosterCollection : public RosterObject
+template<class T>
+class RosterCollection : public RosterComponent
 {
-    Q_OBJECT
 public:
-    explicit RosterCollection(QObject *parent = 0);
+    explicit RosterCollection(QObject *derived);
     ~RosterCollection();
 
     void clear();
-    int size() const;
+    void size() const;
+    void isEmpty() const;
 
-public slots:
+    // Adds member to collection
+    virtual bool addMember(OWNERSHIP T *member);
+    // Removes member under key from collection, return false if member aren't exist
+    virtual bool removeMember(T *member);
+    // NOTE: You can also delete particular member via delete operator
 
-signals:
+    // Returns first member in collection
+    T *first() const;
+    // Return all members in collection
+    QList<T *> all() const;
 
 protected:
-    bool addObjectPrivate(OWNERSHIP RosterObject *object);
-
-protected slots:
-    void onObjectDestroyed(QObject *obj);
 
 protected:
-    QList<RosterObject *> m_objectList;
+    virtual void onMemberDestroyed(QObject *obj);
 
-private:
-
+protected:
+    QList<T *> m_memberList;
+    QObject *m_derived;
 };
 
 #endif // ROSTERCOLLECTION_H

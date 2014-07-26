@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "Roster/RosterComponent.h"
 
+#include <QPointer>
+
 #include "Roster/Pawn.h"
 
 namespace Ui {
@@ -49,19 +51,22 @@ private:
 
 private slots:
     // Fill's materials
-    void fillMaterials();
+    void fillMaterials();    
 
-    void fillSkins(PawnClass *pawnClass);
-    void fillFaces(PawnSkin *skin);
+    void fillClasses();
+    void fillSkins();
+    void fillFaces();
 
-    // Handle deleting external components
-    void onDestroyed(QObject *obj);
+    void onCurrentClassChanged(const QString &name);
+    void onCurrentSkinChanged(const QString &name);
 
 private:
     Ui::PawnEditor *ui;
     EditorMode m_mode;
 
-    MaterialCollection *m_materialCollection;
+    QPointer<MaterialCollection> m_materialCollection;
+    QPointer<PawnClass> m_currentClass;
+    QPointer<PawnSkin> m_currentSkin;
 };
 
 #endif // PAWNEDITOR_H

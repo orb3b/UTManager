@@ -18,8 +18,12 @@ signals:
 
 public slots:
 
+private:
+    void createClassCollection();
+    void deleteClassCollection();
+
 private slots:
-    void onMemberDestroyed(QObject *obj);
+    void onMemberDestroyed(QObject *obj);    
 
 private:
     ClassCollection *m_classCollection;

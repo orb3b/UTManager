@@ -4,13 +4,13 @@
 #include <QMessageBox>
 
 #include "Logs.h"
+#include "Roster/MaterialCollection.h"
 
 PawnEditor::PawnEditor(QWidget *parent) :
     QDialog(parent),
     RosterComponent(),
     ui(new Ui::PawnEditor),
-    m_mode(EditTeamMember),
-    m_materialCollection(nullptr)
+    m_mode(EditTeamMember)
 {
     ui->setupUi(this);
 
@@ -26,6 +26,10 @@ PawnEditor::PawnEditor(QWidget *parent) :
     ui->cbTeam->addItem("Green", QVariant::fromValue((int)Pawn::Green));
     ui->cbTeam->addItem("Gold", QVariant::fromValue((int)Pawn::Gold));
 
+    // Ui - Material Combo boxes
+    connect(ui->cbClasses, SIGNAL(currentIndexChanged(QString)), SLOT(onCurrentClassChanged(QString)), Qt::QueuedConnection);
+    connect(ui->cbSkins, SIGNAL(currentIndexChanged(QString)), SLOT(onCurrentSkinChanged(QString)), Qt::QueuedConnection);
+
     // Change Ui according to editor's mode
     changeUi();
 }
@@ -37,13 +41,7 @@ PawnEditor::~PawnEditor()
 
 void PawnEditor::setMaterialCollection(MaterialCollection *collection)
 {
-    if (m_materialCollection) {
-        disconnect(m_materialCollection, SIGNAL(destroyed(QObject*)), this, SLOT(onDestroyed(QObject*)));
-    }
-
     m_materialCollection = collection;
-
-    connect(m_materialCollection, SIGNAL(destroyed(QObject*)), SLOT(onDestroyed(QObject*)));
 
     fillMaterials();
 }
@@ -110,45 +108,96 @@ void PawnEditor::fillUi(const Pawn &member)
 
 void PawnEditor::fillMaterials()
 {
-    if (!m_materialCollection)
+    if (m_materialCollection.isNull())
         return;
 
-    if (m_materialCollection->classCollection()->size() < 1)
-        return;
+    fillClasses();
+}
 
+void PawnEditor::setCurrentClass(PawnClass *current)
+{
+    m_currentClass = current;
+
+    fillSkins();
+}
+
+void PawnEditor::setCurrentSkin(PawnSkin *current)
+{
+    m_currentSkin = current;
+
+    fillFaces();
+}
+
+void PawnEditor::fillClasses()
+{
     ui->cbClasses->clear();
 
-    foreach(PawnClass *pawnClass, m_materialCollection->classCollection()->allClasses())
-        ui->cbClasses->addItem(pawnClass->description());
-
-    fillSkins(m_materialCollection->classCollection()->first());
-    fillFaces(m_materialCollection->classCollection()->first()->skinCollection());
-}
-
-void PawnEditor::fillSkins(PawnClass *pawnClass)
-{
-    if (!pawnClass)
+    if (m_materialCollection.isNull())
         return;
 
+    foreach(PawnClass *pawnClass, m_materialCollection->classCollection()->all())
+        ui->cbClasses->addItem(pawnClass->name());
+
+    if (ui->cbClasses->size() > 0)
+        ui->cbClasses->setCurrentIndex(0);
+
+    // Skins will be updated by class's index change
+}
+
+void PawnEditor::fillSkins()
+{
     ui->cbSkins->clear();
 
-    foreach(PawnSkin *skin, pawnClass->skinCollection()->all())
-        ui->cbSkins->addItem(skin->description());
+    if (m_currentClass.isNull())
+        return;    
+
+    foreach(PawnSkin *skin, m_currentClass->skinCollection()->all())
+        ui->cbSkins->addItem(skin->name());
+
+    if (ui->cbSkins->size() > 0)
+        ui->cbSkins->setCurrentIndex(0);
+
+    // Faces will be updated by skin's index change
 }
 
-void PawnEditor::fillFaces(PawnSkin *skin)
+void PawnEditor::fillFaces()
 {
-    if (!skin)
-        return;
-
     ui->cbFaces->clear();
 
-    foreach(PawnFace *face, skin->faceCollection()->all())
-        ui->cbSkins->addItem(face->description());
+    if (m_currentSkin.isNull())
+        return;    
+
+    foreach(PawnFace *face, m_currentSkin->faceCollection()->all())
+        ui->cbFaces->addItem(face->name());
+
+    if (ui->cbFaces->size() > 0)
+        ui->cbFaces->setCurrentIndex(0);
 }
 
-void PawnEditor::onDestroyed(QObject *obj)
+void PawnEditor::onCurrentClassChanged(const QString &name)
 {
-    if (obj == m_materialCollection)
-        m_materialCollection = nullptr;
+    if (m_materialCollection.isNull())
+        return;
+
+    PawnClass *current = m_materialCollection->classCollection()->getClass(name);
+    if (!current) {
+        postError(QString("Class %1 aren't exist").arg(name));
+        return;
+    }
+
+    setCurrentClass(current);
+}
+
+void PawnEditor::onCurrentSkinChanged(const QString &name)
+{
+    if (m_currentClass.isNull())
+        return;
+
+    PawnSkin *current = m_currentClass->getSkin(name);
+    if (!current) {
+        postError(QString("Skin %1 aren't exist").arg(name));
+        return;
+    }
+
+    setCurrentSkin(current);
 }
