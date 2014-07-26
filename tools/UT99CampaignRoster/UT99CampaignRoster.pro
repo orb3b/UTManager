@@ -29,9 +29,15 @@ SOURCES += main.cpp\
     Roster/RosterComponent.cpp \
     TeamMembersWidget.cpp \
     InteractionWidget.cpp \
-    Roster/RosterCollection.cpp \
     Roster/ClassCollection.cpp \
-    Roster/MaterialCollection.cpp
+    Roster/MaterialCollection.cpp \
+    Roster/RosterContainer.cpp \
+    Roster/Material.cpp \
+    Roster/PawnClass.cpp \
+    Roster/SkinCollection.cpp \
+    Roster/PawnSkin.cpp \
+    Roster/FaceCollection.cpp \
+    Roster/PawnFace.cpp
 
 HEADERS  += MainWindow.h \
     Logs.h \
@@ -48,9 +54,15 @@ HEADERS  += MainWindow.h \
     Roster/RosterComponent.h \
     TeamMembersWidget.h \
     InteractionWidget.h \
-    Roster/RosterCollection.h \
     Roster/ClassCollection.h \
-    Roster/MaterialCollection.h
+    Roster/MaterialCollection.h \
+    Roster/RosterContainer.h \
+    Roster/Material.h \
+    Roster/PawnClass.h \
+    Roster/SkinCollection.h \
+    Roster/PawnSkin.h \
+    Roster/FaceCollection.h \
+    Roster/PawnFace.h
 
 FORMS    += MainWindow.ui \
     PawnEditor.ui \

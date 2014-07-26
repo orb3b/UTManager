@@ -57,6 +57,9 @@ private slots:
     void fillSkins();
     void fillFaces();
 
+    void setCurrentClass(PawnClass *current);
+    void setCurrentSkin(PawnSkin *current);
+
     void onCurrentClassChanged(const QString &name);
     void onCurrentSkinChanged(const QString &name);
 

@@ -5,6 +5,12 @@
 
 #include "Logs.h"
 #include "Roster/MaterialCollection.h"
+#include "Roster/ClassCollection.h"
+#include "Roster/SkinCollection.h"
+#include "Roster/FaceCollection.h"
+#include "Roster/PawnClass.h"
+#include "Roster/PawnSkin.h"
+#include "Roster/PawnFace.h"
 
 PawnEditor::PawnEditor(QWidget *parent) :
     QDialog(parent),
@@ -135,10 +141,10 @@ void PawnEditor::fillClasses()
     if (m_materialCollection.isNull())
         return;
 
-    foreach(PawnClass *pawnClass, m_materialCollection->classCollection()->all())
+    foreach(PawnClass *pawnClass, m_materialCollection->classCollection()->allClasses())
         ui->cbClasses->addItem(pawnClass->name());
 
-    if (ui->cbClasses->size() > 0)
+    if (ui->cbClasses->count() > 0)
         ui->cbClasses->setCurrentIndex(0);
 
     // Skins will be updated by class's index change
@@ -151,10 +157,10 @@ void PawnEditor::fillSkins()
     if (m_currentClass.isNull())
         return;    
 
-    foreach(PawnSkin *skin, m_currentClass->skinCollection()->all())
+    foreach(PawnSkin *skin, m_currentClass->skinCollection()->allSkins())
         ui->cbSkins->addItem(skin->name());
 
-    if (ui->cbSkins->size() > 0)
+    if (ui->cbSkins->count() > 0)
         ui->cbSkins->setCurrentIndex(0);
 
     // Faces will be updated by skin's index change
@@ -167,10 +173,10 @@ void PawnEditor::fillFaces()
     if (m_currentSkin.isNull())
         return;    
 
-    foreach(PawnFace *face, m_currentSkin->faceCollection()->all())
+    foreach(PawnFace *face, m_currentSkin->faceCollection()->allFaces())
         ui->cbFaces->addItem(face->name());
 
-    if (ui->cbFaces->size() > 0)
+    if (ui->cbFaces->count() > 0)
         ui->cbFaces->setCurrentIndex(0);
 }
 
@@ -193,7 +199,7 @@ void PawnEditor::onCurrentSkinChanged(const QString &name)
     if (m_currentClass.isNull())
         return;
 
-    PawnSkin *current = m_currentClass->getSkin(name);
+    PawnSkin *current = m_currentClass->skinCollection()->getSkin(name);
     if (!current) {
         postError(QString("Skin %1 aren't exist").arg(name));
         return;

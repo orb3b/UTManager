@@ -1,21 +1,31 @@
 #ifndef CLASSCOLLECTION_H
 #define CLASSCOLLECTION_H
 
-#include "RosterCollection.h"
-#include <QObject>
+#include "RosterObject.h"
+
+#include "RosterContainer.h"
 
 class PawnClass;
 
-class ClassCollection : public RosterCollection<PawnClass>
+class ClassCollection : public RosterObject
 {
     Q_OBJECT
 public:
     explicit ClassCollection(QObject *parent = 0);
     ~ClassCollection();
 
+    PawnClass *getClass(const QString &name);
+
+    QList<PawnClass *> allClasses() const;
+
+    PawnClass *first() const;
+
 signals:
 
 public slots:
+
+private:
+    RosterContainer m_classes;
 
 };
 
