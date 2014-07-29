@@ -11,46 +11,38 @@ public:
     tst_Pawn();
 
 private Q_SLOTS:
-    void setName_Normal();
-    void setName_Empty();
-    void setName_Same();
+    void setName_data();
+    void setName();
 };
 
 tst_Pawn::tst_Pawn()
 {
 }
 
-void tst_Pawn::setName_Normal()
+void tst_Pawn::setName_data()
 {
+    QTest::addColumn<QString>("name");
+    QTest::addColumn<QString>("result_name");
+    QTest::addColumn<bool>("result_changed");
+
+    QTest::newRow("normal name") << "MyName" << "MyName" << true;
+    QTest::newRow("empty name") << "" << QString() << true;
+    QTest::newRow1("same name") << Pawn().name() << Pawn().name() << false;
+}
+
+void tst_Pawn::setName()
+{
+    QFETCH(QString, name);
+    QFETCH(QString, result_name);
+    QFETCH(bool, result_changed);
+
     Pawn p;
 
-    p.setName("MyName");
+    p.setName(name);
 
-    QCOMPARE(p.name(), QString("MyName"));
-    QVERIFY(p.changed());
+    QCOMPARE(p.name(), result_name);
+    QVERIFY(p.changed() == result_changed);
 }
-
-void tst_Pawn::setName_Empty()
-{
-    Pawn g;
-
-    g.setName("");
-
-    QCOMPARE(g.name(), QString());
-    QVERIFY(g.changed());
-}
-
-void tst_Pawn::setName_Same()
-{
-    Pawn p;
-    QString oldName = p.name();
-
-    p.setName(p.name());
-
-    QCOMPARE(p.name(), oldName);
-    QVERIFY(!p.changed());
-}
-
 
 QTEST_APPLESS_MAIN(tst_Pawn)
 
