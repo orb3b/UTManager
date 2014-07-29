@@ -27,7 +27,7 @@ void tst_Pawn::setName_data()
 
     QTest::newRow("normal name") << "MyName" << "MyName" << true;
     QTest::newRow("empty name") << "" << QString() << true;
-    QTest::newRow1("same name") << Pawn().name() << Pawn().name() << false;
+    QTest::newRow("same name") << Pawn().name() << Pawn().name() << false;
 }
 
 void tst_Pawn::setName()
