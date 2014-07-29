@@ -11,8 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = UT99CampaignRoster
 TEMPLATE = app
 
+DESTDIR += "$$PWD\..\..\bin"
+
 INCLUDEPATH += "$$PWD" \
-               "$$PWD\..\..\src"
+               "$$PWD\..\..\..\..\src"
 
 
 SOURCES += main.cpp\
@@ -47,7 +49,7 @@ HEADERS  += MainWindow.h \
     Roster/PawnGroup.h \
     Roster/Pawn.h \
     Roster/TeamCollection.h \
-    ../../src/CodeStyle.h \
+    ../../../../src/CodeStyle.h \
     PawnEditor.h \
     PawnGroupsWidget.h \
     PawnConverter.h \
