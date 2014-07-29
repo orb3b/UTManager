@@ -39,7 +39,9 @@ SOURCES += main.cpp\
     Roster/SkinCollection.cpp \
     Roster/PawnSkin.cpp \
     Roster/FaceCollection.cpp \
-    Roster/PawnFace.cpp
+    Roster/PawnFace.cpp \
+    Roster/PawnVoice.cpp \
+    Roster/Weapon.cpp
 
 HEADERS  += MainWindow.h \
     Logs.h \
@@ -64,7 +66,9 @@ HEADERS  += MainWindow.h \
     Roster/SkinCollection.h \
     Roster/PawnSkin.h \
     Roster/FaceCollection.h \
-    Roster/PawnFace.h
+    Roster/PawnFace.h \
+    Roster/PawnVoice.h \
+    Roster/Weapon.h
 
 FORMS    += MainWindow.ui \
     PawnEditor.ui \

@@ -14,3 +14,13 @@ void Material::setName(const QString &newName)
 {
     m_name = newName;
 }
+
+QString Material::description() const
+{
+    return m_description;
+}
+
+void Material::setDescription(const QString &newDescription)
+{
+    m_description = newDescription;
+}

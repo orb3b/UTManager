@@ -12,12 +12,16 @@ public:
     QString name() const;
     void setName(const QString &newName);
 
+    QString description() const;
+    void setDescription(const QString &newDescription);
+
 signals:
 
 public slots:
 
 protected:
     QString m_name;
+    QString m_description;
 
 };
 
