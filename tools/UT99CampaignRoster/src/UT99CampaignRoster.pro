@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-           UT99CampaignRoster
+           UT99CampaignRoster \
+           Tests

@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = UT99CampaignRoster
 TEMPLATE = app
 
-DESTDIR += "$$PWD\..\..\bin"
+DESTDIR = "$$PWD\..\..\bin"
 
 INCLUDEPATH += "$$PWD" \
                "$$PWD\..\..\..\..\src"
