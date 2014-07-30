@@ -3,7 +3,8 @@
 #include "ClassCollection.h"
 
 MaterialCollection::MaterialCollection(QObject *parent) :
-    RosterObject(parent)
+    RosterObject(parent),
+    m_classCollection(nullptr)
 {
     createClassCollection();
 }

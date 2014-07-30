@@ -3,7 +3,8 @@
 #include "SkinCollection.h"
 
 PawnClass::PawnClass(QObject *parent) :
-    Material(parent)
+    Material(parent),
+    m_skinCollection(nullptr)
 {
     createSkinCollection();
 }

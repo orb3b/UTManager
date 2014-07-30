@@ -3,7 +3,8 @@
 #include "FaceCollection.h"
 
 PawnSkin::PawnSkin(QObject *parent) :
-    Material(parent)
+    Material(parent),
+    m_faceCollection(nullptr)
 {
     createFaceCollection();
 }

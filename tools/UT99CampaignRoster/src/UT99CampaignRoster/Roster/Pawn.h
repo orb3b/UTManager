@@ -146,5 +146,6 @@ private:
     bool m_jumpy;
 };
 Q_DECLARE_METATYPE(Pawn)
+Q_DECLARE_METATYPE(Pawn::Team)
 
 #endif // PAWN_H

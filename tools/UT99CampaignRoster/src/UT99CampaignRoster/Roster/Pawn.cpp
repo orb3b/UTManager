@@ -1,4 +1,5 @@
 #include "Pawn.h"
+#include "Logs.h"
 
 const int Pawn::MIN_SKILL_ADJUST = -4;
 const int Pawn::MAX_SKILL_ADJUST = 4;
@@ -151,7 +152,7 @@ bool Pawn::setSkillAdjust(int newSkillAdjust)
     if (m_skillAdjust == newSkillAdjust)
         return true;
 
-    if (newSkillAdjust < -4 || newSkillAdjust > 4)
+    if (newSkillAdjust < MIN_SKILL_ADJUST || newSkillAdjust > MAX_SKILL_ADJUST)
         return false;
 
     m_skillAdjust = newSkillAdjust;
@@ -181,9 +182,9 @@ double Pawn::accuracy() const
 bool Pawn::setAccuracy(double newAccuracy)
 {
     if (m_accuracy == newAccuracy)
-        return true;
+        return true;    
 
-    if (m_accuracy < MIN_ACCURACY && m_accuracy > MAX_ACCURACY)
+    if (newAccuracy < MIN_ACCURACY || newAccuracy > MAX_ACCURACY)
         return false;
 
     m_accuracy = newAccuracy;
