@@ -12,6 +12,10 @@ namespace Ui {
 class PawnEditor;
 }
 
+class QAbstractSpinBox;
+class QAbstractSlider;
+class QDoubleSpinBox;
+
 class MaterialCollection;
 class PawnClass;
 class PawnSkin;
@@ -48,6 +52,9 @@ protected:
 private:
     void changeUi();
     void fillUi(const Pawn &getMember);
+
+    void connectSliderAndSpinBox(QAbstractSlider *slider, QAbstractSpinBox *spinBox);
+    void connectSliderAndDoubleSpinBox(QAbstractSlider *slider, QDoubleSpinBox *spinBox);
 
 private slots:
     // Fill's materials

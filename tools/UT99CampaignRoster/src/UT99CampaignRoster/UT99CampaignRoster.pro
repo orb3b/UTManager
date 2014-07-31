@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     Roster/FaceCollection.cpp \
     Roster/PawnFace.cpp \
     Roster/PawnVoice.cpp \
-    Roster/Weapon.cpp
+    Roster/Weapon.cpp \
+    EditorConnector.cpp
 
 HEADERS  += MainWindow.h \
     Logs.h \
@@ -68,7 +69,8 @@ HEADERS  += MainWindow.h \
     Roster/FaceCollection.h \
     Roster/PawnFace.h \
     Roster/PawnVoice.h \
-    Roster/Weapon.h
+    Roster/Weapon.h \
+    EditorConnector.h
 
 FORMS    += MainWindow.ui \
     PawnEditor.ui \

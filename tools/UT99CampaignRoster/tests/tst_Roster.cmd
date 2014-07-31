@@ -1,7 +1,8 @@
 @ECHO OFF
 
 SET Tests=Roster\tst_qstring.exe^
-		  Roster\tst_pawn.exe
+		  Roster\tst_pawn.exe^
+		  Application\tst_editorconnector.exe
 
 SetLocal EnableDelayedExpansion
 for %%f in (%Tests%) do (		

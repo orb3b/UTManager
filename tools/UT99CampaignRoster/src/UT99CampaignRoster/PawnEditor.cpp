@@ -11,6 +11,7 @@
 #include "Roster/PawnClass.h"
 #include "Roster/PawnSkin.h"
 #include "Roster/PawnFace.h"
+#include "EditorConnector.h"
 
 PawnEditor::PawnEditor(QWidget *parent) :
     QDialog(parent),
@@ -35,6 +36,21 @@ PawnEditor::PawnEditor(QWidget *parent) :
     // Ui - Material Combo boxes
     connect(ui->cbClasses, SIGNAL(currentIndexChanged(QString)), SLOT(onCurrentClassChanged(QString)), Qt::QueuedConnection);
     connect(ui->cbSkins, SIGNAL(currentIndexChanged(QString)), SLOT(onCurrentSkinChanged(QString)), Qt::QueuedConnection);
+
+    // Ui - Skill adjust group
+    ui->hsSkillAdjust->setMinimum(Pawn::MIN_SKILL_ADJUST);
+    ui->hsSkillAdjust->setMaximum(Pawn::MAX_SKILL_ADJUST);
+
+    ui->sbSkillAdjust->setMinimum(Pawn::MIN_SKILL_ADJUST);
+    ui->sbSkillAdjust->setMaximum(Pawn::MAX_SKILL_ADJUST);
+
+    connectSliderAndSpinBox(ui->hsSkillAdjust, ui->sbSkillAdjust);
+
+    // Ui - Accuracy group
+    ui->dspAccuracy->setMinimum(Pawn::MIN_ACCURACY);
+    ui->dspAccuracy->setMaximum(Pawn::MAX_ACCURACY);
+
+    connectSliderAndDoubleSpinBox(ui->hsAccuracy, ui->dspAccuracy);
 
     // Change Ui according to editor's mode
     changeUi();
@@ -110,6 +126,19 @@ void PawnEditor::fillUi(const Pawn &member)
     ui->cbTeam->setCurrentIndex(ui->cbTeam->findData(member.team()));
 
     ui->sbLives->setValue(member.lives());
+}
+
+void PawnEditor::connectSliderAndSpinBox(QAbstractSlider *slider, QAbstractSpinBox *spinBox)
+{
+    connect(slider, SIGNAL(valueChanged(int)), spinBox, SLOT(setValue(int)));
+    connect(spinBox, SIGNAL(valueChanged(int)), slider, SLOT(setValue(int)));
+}
+
+void PawnEditor::connectSliderAndDoubleSpinBox(QAbstractSlider *slider, QDoubleSpinBox *spinBox)
+{
+    // Create new EditorConnector and attach it to this widget (look at this)
+    EditorConnector *connector = new EditorConnector(this);
+    connector->setup(slider, spinBox, 100);
 }
 
 void PawnEditor::fillMaterials()
