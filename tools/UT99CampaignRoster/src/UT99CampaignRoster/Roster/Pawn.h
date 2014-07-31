@@ -121,6 +121,8 @@ public:
 
     // Stuff
     bool operator == (const Pawn &other);
+    bool operator != (const Pawn &other);
+
     Pawn operator = (const Pawn &other);
 
 private:

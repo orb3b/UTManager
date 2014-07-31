@@ -290,6 +290,11 @@ bool Pawn::operator ==(const Pawn &other)
     return m_name == other.name();
 }
 
+bool Pawn::operator !=(const Pawn &other)
+{
+    return !operator == (other);
+}
+
 Pawn Pawn::operator =(const Pawn &other)
 {
     copy(other);
