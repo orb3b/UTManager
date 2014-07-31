@@ -7,6 +7,15 @@ const int Pawn::MAX_SKILL_ADJUST = 4;
 const double Pawn::MIN_ACCURACY = -1.0;
 const double Pawn::MAX_ACCURACY = 1.0;
 
+const double Pawn::MIN_ALERTNESS = -1.0;
+const double Pawn::MAX_ALERTNESS = 1.0;
+
+const double Pawn::MIN_CAMPING = 0.0;
+const double Pawn::MAX_CAMPING = 1.0;
+
+const double Pawn::MIN_STRAFING_AGILITY = -1.0;
+const double Pawn::MAX_STRAFING_AGILITY = 1.0;
+
 Pawn::Pawn(const QString &name, Pawn::Team pawnTeam, uint pawnLives) :
     m_null(false),
     m_changed(false),
@@ -21,7 +30,7 @@ Pawn::Pawn(const QString &name, Pawn::Team pawnTeam, uint pawnLives) :
     m_favouriteWeapon(nullptr),
     m_accuracy(0.0),
     m_alertness(0.0),
-    m_strafingAbility(0.0),
+    m_strafingAgility(0.0),
     m_camping(0.5),
     m_combatStyle(Normal),
     m_jumpy(false)
@@ -203,23 +212,10 @@ bool Pawn::setAlertness(double newAlertness)
     if (m_alertness == newAlertness)
         return true;
 
+    if (newAlertness < MIN_ALERTNESS || newAlertness > MAX_ALERTNESS)
+        return false;
+
     m_alertness = newAlertness;
-    m_changed = true;
-
-    return true;
-}
-
-double Pawn::strafingAbility() const
-{
-    return m_strafingAbility;
-}
-
-bool Pawn::setStrafingAbility(double newStrafingAbility)
-{
-    if (m_strafingAbility == newStrafingAbility)
-        return true;
-
-    m_strafingAbility = newStrafingAbility;
     m_changed = true;
 
     return true;
@@ -235,7 +231,29 @@ bool Pawn::setCamping(double newCamping)
     if (m_camping == newCamping)
         return true;
 
+    if (newCamping < MIN_CAMPING || newCamping > MAX_CAMPING)
+        return false;
+
     m_camping = newCamping;
+    m_changed = true;
+
+    return true;
+}
+
+double Pawn::strafingAgility() const
+{
+    return m_strafingAgility;
+}
+
+bool Pawn::setStrafingAgility(double newStrafingAbility)
+{
+    if (m_strafingAgility == newStrafingAbility)
+        return true;
+
+    if (newStrafingAbility < MIN_STRAFING_AGILITY || newStrafingAbility > MAX_STRAFING_AGILITY)
+        return false;
+
+    m_strafingAgility = newStrafingAbility;
     m_changed = true;
 
     return true;
@@ -298,7 +316,7 @@ void Pawn::copy(const Pawn &other)
 
     m_accuracy = other.m_accuracy;
     m_alertness = other.m_alertness;
-    m_strafingAbility = other.m_strafingAbility;
+    m_strafingAgility = other.m_strafingAgility;
     m_camping = other.m_camping;
 
     m_combatStyle = other.m_combatStyle;

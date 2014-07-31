@@ -45,6 +45,21 @@ private Q_SLOTS:
 
     void setAccuracy_data();
     void setAccuracy();
+
+    void setAlertness_data();
+    void setAlertness();
+
+    void setCamping_data();
+    void setCamping();
+
+    void setStrafingAbility_data();
+    void setStrafingAbility();
+
+    void setCombatStyle_data();
+    void setCombatStyle();
+
+    void setJumpy_data();
+    void setJumpy();
 };
 
 tst_Pawn::tst_Pawn()
@@ -313,8 +328,8 @@ void tst_Pawn::setAccuracy_data()
     QTest::newRow(QString("normal (%1)").arg(normal).toLatin1()) << normal << normal << true;
     QTest::newRow(QString("normal min (%1)").arg(min).toLatin1()) << min << min << true;
     QTest::newRow(QString("normal max (%1)").arg(max).toLatin1()) << max << max << true;
-    QTest::newRow(QString("normal >max (%1)").arg(lessMin).toLatin1()) << lessMin << Pawn().accuracy() << false;
-    QTest::newRow(QString("normal min< (%1)").arg(moreMax).toLatin1()) << moreMax << Pawn().accuracy() << false;
+    QTest::newRow(QString("normal <min (%1)").arg(lessMin).toLatin1()) << lessMin << Pawn().accuracy() << false;
+    QTest::newRow(QString("normal >max (%1)").arg(moreMax).toLatin1()) << moreMax << Pawn().accuracy() << false;
     QTest::newRow("same") << Pawn().accuracy() << Pawn().accuracy() << false;
 }
 
@@ -329,6 +344,156 @@ void tst_Pawn::setAccuracy()
     p.setAccuracy(input);
 
     QCOMPARE(p.accuracy(), result);
+    QVERIFY(p.changed() == result_changed);
+}
+
+void tst_Pawn::setAlertness_data()
+{
+    QTest::addColumn<double>("input");
+    QTest::addColumn<double>("result");
+    QTest::addColumn<bool>("result_changed");
+
+    double normal = 0.25,
+           min = Pawn::MIN_ALERTNESS,
+           lessMin = min - 0.1,
+           max = Pawn::MAX_ALERTNESS,
+           moreMax = max + 0.003;
+
+    QTest::newRow(QString("normal (%1)").arg(normal).toLatin1()) << normal << normal << true;
+    QTest::newRow(QString("normal min (%1)").arg(min).toLatin1()) << min << min << true;
+    QTest::newRow(QString("normal max (%1)").arg(max).toLatin1()) << max << max << true;
+    QTest::newRow(QString("normal <min (%1)").arg(lessMin).toLatin1()) << lessMin << Pawn().alertness() << false;
+    QTest::newRow(QString("normal >max (%1)").arg(moreMax).toLatin1()) << moreMax << Pawn().alertness() << false;
+    QTest::newRow("same") << Pawn().alertness() << Pawn().alertness() << false;
+}
+
+void tst_Pawn::setAlertness()
+{
+    QFETCH(double, input);
+    QFETCH(double, result);
+    QFETCH(bool, result_changed);
+
+    Pawn p;
+
+    p.setAlertness(input);
+
+    QCOMPARE(p.alertness(), result);
+    QVERIFY(p.changed() == result_changed);
+}
+
+void tst_Pawn::setCamping_data()
+{
+    QTest::addColumn<double>("input");
+    QTest::addColumn<double>("result");
+    QTest::addColumn<bool>("result_changed");
+
+    double normal = 0.25,
+           min = Pawn::MIN_CAMPING,
+           lessMin = min - 0.0001,
+           max = Pawn::MAX_CAMPING,
+           moreMax = max + 0.99;
+
+    QTest::newRow(QString("normal (%1)").arg(normal).toLatin1()) << normal << normal << true;
+    QTest::newRow(QString("normal min (%1)").arg(min).toLatin1()) << min << min << true;
+    QTest::newRow(QString("normal max (%1)").arg(max).toLatin1()) << max << max << true;
+    QTest::newRow(QString("normal <min (%1)").arg(lessMin).toLatin1()) << lessMin << Pawn().camping() << false;
+    QTest::newRow(QString("normal >max (%1)").arg(moreMax).toLatin1()) << moreMax << Pawn().camping() << false;
+    QTest::newRow("same") << Pawn().camping() << Pawn().camping() << false;
+}
+
+void tst_Pawn::setCamping()
+{
+    QFETCH(double, input);
+    QFETCH(double, result);
+    QFETCH(bool, result_changed);
+
+    Pawn p;
+
+    p.setCamping(input);
+
+    QCOMPARE(p.camping(), result);
+    QVERIFY(p.changed() == result_changed);
+}
+
+void tst_Pawn::setStrafingAbility_data()
+{
+    QTest::addColumn<double>("input");
+    QTest::addColumn<double>("result");
+    QTest::addColumn<bool>("result_changed");
+
+    double normal = 0.25,
+           min = Pawn::MIN_STRAFING_AGILITY,
+           lessMin = min - 0.00001,
+           max = Pawn::MAX_STRAFING_AGILITY,
+           moreMax = max + 0.00001;
+
+    QTest::newRow(QString("normal (%1)").arg(normal).toLatin1()) << normal << normal << true;
+    QTest::newRow(QString("normal min (%1)").arg(min).toLatin1()) << min << min << true;
+    QTest::newRow(QString("normal max (%1)").arg(max).toLatin1()) << max << max << true;
+    QTest::newRow(QString("normal <min (%1)").arg(lessMin).toLatin1()) << lessMin << Pawn().strafingAgility() << false;
+    QTest::newRow(QString("normal >max (%1)").arg(moreMax).toLatin1()) << moreMax << Pawn().strafingAgility() << false;
+    QTest::newRow("same") << Pawn().strafingAgility() << Pawn().strafingAgility() << false;
+}
+
+void tst_Pawn::setStrafingAbility()
+{
+    QFETCH(double, input);
+    QFETCH(double, result);
+    QFETCH(bool, result_changed);
+
+    Pawn p;
+
+    p.setStrafingAgility(input);
+
+    QCOMPARE(p.strafingAgility(), result);
+    QVERIFY(p.changed() == result_changed);
+}
+
+void tst_Pawn::setCombatStyle_data()
+{
+    QTest::addColumn<Pawn::CombatStyle>("input");
+    QTest::addColumn<Pawn::CombatStyle>("result");
+    QTest::addColumn<bool>("result_changed");
+
+    QTest::newRow("normal") << Pawn::Berserk << Pawn::Berserk << true;
+    QTest::newRow("same") << Pawn().combatStyle() << Pawn().combatStyle() << false;
+}
+
+void tst_Pawn::setCombatStyle()
+{
+    QFETCH(Pawn::CombatStyle, input);
+    QFETCH(Pawn::CombatStyle, result);
+    QFETCH(bool, result_changed);
+
+    Pawn p;
+
+    p.setCombatStyle(input);
+
+    QCOMPARE(p.combatStyle(), result);
+    QVERIFY(p.changed() == result_changed);
+}
+
+void tst_Pawn::setJumpy_data()
+{
+    QTest::addColumn<bool>("input");
+    QTest::addColumn<bool>("result");
+    QTest::addColumn<bool>("result_changed");
+
+    QTest::newRow("normal") << true << true << true;
+    QTest::newRow("same") << Pawn().jumpy() << Pawn().jumpy() << false;
+}
+
+void tst_Pawn::setJumpy()
+{
+    QFETCH(bool, input);
+    QFETCH(bool, result);
+    QFETCH(bool, result_changed);
+
+    Pawn p;
+
+    p.setJumpy(input);
+
+    QCOMPARE(p.jumpy(), result);
     QVERIFY(p.changed() == result_changed);
 }
 

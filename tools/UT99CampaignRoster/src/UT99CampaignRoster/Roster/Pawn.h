@@ -22,11 +22,20 @@ public:
         Gold
     };
 
-    static const int MIN_SKILL_ADJUST;
-    static const int MAX_SKILL_ADJUST;
+    static const int MIN_SKILL_ADJUST; // -4
+    static const int MAX_SKILL_ADJUST; //  4
 
-    static const double MIN_ACCURACY;
-    static const double MAX_ACCURACY;
+    static const double MIN_ACCURACY; // -1.0
+    static const double MAX_ACCURACY; //  1.0
+
+    static const double MIN_ALERTNESS; // -1.0
+    static const double MAX_ALERTNESS; //  1.0
+
+    static const double MIN_CAMPING; // 0.0
+    static const double MAX_CAMPING; // 1.0
+
+    static const double MIN_STRAFING_AGILITY; // -1.0
+    static const double MAX_STRAFING_AGILITY; //  1.0
 
     enum CombatStyle {
         Normal,
@@ -86,21 +95,21 @@ public:
     Weapon *favouriteWeapon() const;
     void setFavouriteWeapon(Weapon* weapon);
 
-    // Accuracy, between -1.0 and 1.0
+    // Accuracy, between MIN and MAX (see below)
     double accuracy() const;
     bool setAccuracy(double newAccuracy);
 
-    // Alertness
+    // Alertness, between MIN and MAX (see below)
     double alertness() const;
     bool setAlertness(double newAlertness);
 
-    // Strafing ability
-    double strafingAbility() const;
-    bool setStrafingAbility(double newStrafingAbility);
-
-    // Camping
+    // Camping, between MIN and MAX (see below)
     double camping() const;
     bool setCamping(double newCamping);
+
+    // Strafing ability, between MIN and MAX (see below)
+    double strafingAgility() const;
+    bool setStrafingAgility(double newStrafingAbility);
 
     // Combat style
     CombatStyle combatStyle() const;
@@ -138,7 +147,7 @@ private:
 
     double m_accuracy;
     double m_alertness;
-    double m_strafingAbility;
+    double m_strafingAgility;
     double m_camping;
 
     CombatStyle m_combatStyle;
@@ -147,5 +156,6 @@ private:
 };
 Q_DECLARE_METATYPE(Pawn)
 Q_DECLARE_METATYPE(Pawn::Team)
+Q_DECLARE_METATYPE(Pawn::CombatStyle)
 
 #endif // PAWN_H
