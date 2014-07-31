@@ -133,19 +133,6 @@ void Pawn::setFace(PawnFace *newFace)
     }
 }
 
-PawnVoice *Pawn::voice() const
-{
-    return m_voice.data();
-}
-
-void Pawn::setVoice(PawnVoice *newVoice)
-{
-    if (m_voice != newVoice) {
-        m_voice = newVoice;
-        m_changed = true;
-    }
-}
-
 int Pawn::skillAdjust() const
 {
     return m_skillAdjust;
@@ -163,6 +150,19 @@ bool Pawn::setSkillAdjust(int newSkillAdjust)
     m_changed = true;
 
     return true;
+}
+
+PawnVoice *Pawn::voice() const
+{
+    return m_voice.data();
+}
+
+void Pawn::setVoice(PawnVoice *newVoice)
+{
+    if (m_voice != newVoice) {
+        m_voice = newVoice;
+        m_changed = true;
+    }
 }
 
 Weapon *Pawn::favouriteWeapon() const

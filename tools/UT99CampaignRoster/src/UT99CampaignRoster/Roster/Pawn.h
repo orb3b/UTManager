@@ -81,13 +81,13 @@ public:
     PawnFace *face() const;
     void setFace(PawnFace *newFace);
 
-    // Voice, returns nullptr if no voice
-    PawnVoice *voice() const;
-    void setVoice(PawnVoice *newVoice);
-
     // Skill Adjust, between -4 and 4
     int skillAdjust() const;
     bool setSkillAdjust(int newSkillAdjust);
+
+    // Voice, returns nullptr if no voice
+    PawnVoice *voice() const;
+    void setVoice(PawnVoice *newVoice);
 
     // Pawn's favourite weapon
     Weapon *favouriteWeapon() const;

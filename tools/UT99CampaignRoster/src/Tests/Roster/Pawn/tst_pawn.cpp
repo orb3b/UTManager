@@ -36,11 +36,11 @@ private Q_SLOTS:
     void setFace_NormalAndRemoteDeletion();
     void setFace_Same();
 
-    void setVoice_NormalAndRemoteDeletion();
-    void setVoice_Same();
-
     void setSkillAdjust_data();
     void setSkillAdjust();
+
+    void setVoice_NormalAndRemoteDeletion();
+    void setVoice_Same();
 
     void setFavouriteWeapon_NormalAndRemoteDeletion();
     void setFavouriteWeapon_Same();
@@ -227,34 +227,6 @@ void tst_Pawn::setFace_Same()
     QVERIFY(!p.changed());
 }
 
-void tst_Pawn::setVoice_NormalAndRemoteDeletion()
-{
-    Pawn p;
-    PawnVoice *input = new PawnVoice();
-
-    p.setVoice(input);
-
-    QCOMPARE(p.voice(), input);
-    QVERIFY(p.changed());
-
-    delete input;
-    input = nullptr;
-
-    QCOMPARE(p.voice(), input);
-}
-
-void tst_Pawn::setVoice_Same()
-{
-    Pawn p;
-
-    PawnVoice *input = p.voice();
-
-    p.setVoice(p.voice());
-
-    QCOMPARE(p.voice(), input);
-    QVERIFY(!p.changed());
-}
-
 void tst_Pawn::setSkillAdjust_data()
 {
     QTest::addColumn<int>("input");
@@ -288,6 +260,35 @@ void tst_Pawn::setSkillAdjust()
     QCOMPARE(p.skillAdjust(), result);
     QVERIFY(p.changed() == result_changed);
 }
+
+void tst_Pawn::setVoice_NormalAndRemoteDeletion()
+{
+    Pawn p;
+    PawnVoice *input = new PawnVoice();
+
+    p.setVoice(input);
+
+    QCOMPARE(p.voice(), input);
+    QVERIFY(p.changed());
+
+    delete input;
+    input = nullptr;
+
+    QCOMPARE(p.voice(), input);
+}
+
+void tst_Pawn::setVoice_Same()
+{
+    Pawn p;
+
+    PawnVoice *input = p.voice();
+
+    p.setVoice(p.voice());
+
+    QCOMPARE(p.voice(), input);
+    QVERIFY(!p.changed());
+}
+
 
 void tst_Pawn::setFavouriteWeapon_NormalAndRemoteDeletion()
 {
