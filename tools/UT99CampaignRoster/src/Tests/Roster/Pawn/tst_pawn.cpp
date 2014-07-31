@@ -64,7 +64,6 @@ private Q_SLOTS:
     void setJumpy();
 
     void operator_equal();
-    void operator_copy();
 };
 
 tst_Pawn::tst_Pawn()
@@ -519,71 +518,6 @@ void tst_Pawn::operator_equal()
 
     p1.setName(p2.name());
     QVERIFY(p1 == p2);
-}
-
-void tst_Pawn::operator_copy()
-{
-    Pawn p1, p2;
-
-    // Check default coping
-    p1 = p2;
-
-    QCOMPARE(p1.name(), p2.name());
-    QVERIFY(!p1.changed());
-
-    QScopedPointer<PawnClass> pawnClass(new PawnClass());
-    QScopedPointer<PawnSkin> skin(new PawnSkin());
-    QScopedPointer<PawnFace> face(new PawnFace());
-    QScopedPointer<PawnVoice> voice(new PawnVoice());
-    QScopedPointer<Weapon> weapon(new Weapon());
-
-    p2.setName("somename");
-    p2.setTeam(Pawn::Blue);
-    p2.setLives(100);
-    p2.setPawnClass(pawnClass.data());
-    p2.setSkin(skin.data());
-    p2.setFace(face.data());
-    p2.setVoice(voice.data());
-    p2.setSkillAdjust(-1.5);
-    p2.setFavouriteWeapon(weapon.data());
-    p2.setAccuracy(0.9);
-    p2.setAlertness(0.1);
-    p2.setCamping(0.75);
-    p2.setStrafingAgility(-0.5);
-    p2.setCombatStyle(Pawn::Cautious);
-    p2.setJumpy(true);
-
-    p1 = p2;
-
-    QVERIFY(p1 == p2);
-    QCOMPARE(p1.name(), p2.name());
-    QCOMPARE(p1.team(), p2.team());
-    QCOMPARE(p1.lives(), p2.lives());
-    QCOMPARE(p1.pawnClass(), p2.pawnClass());
-    QCOMPARE(p1.skin(), p2.skin());
-    QCOMPARE(p1.face(), p2.face());
-    QCOMPARE(p1.voice(), p2.voice());
-    QCOMPARE(p1.skillAdjust(), p2.skillAdjust());
-    QCOMPARE(p1.favouriteWeapon(), p2.favouriteWeapon());
-    QCOMPARE(p1.accuracy(), p2.accuracy());
-    QCOMPARE(p1.alertness(), p2.alertness());
-    QCOMPARE(p1.camping(), p2.camping());
-    QCOMPARE(p1.strafingAgility(), p2.strafingAgility());
-    QCOMPARE(p1.combatStyle(), p2.combatStyle());
-    QCOMPARE(p1.jumpy(), p2.jumpy());
-    QVERIFY(p1.changed());
-
-    delete pawnClass.take();
-    delete skin.take();
-    delete face.take();
-    delete voice.take();
-    delete weapon.take();
-
-    QVERIFY(p1.pawnClass() == nullptr);
-    QVERIFY(p1.skin() == nullptr);
-    QVERIFY(p1.face() == nullptr);
-    QVERIFY(p1.voice() == nullptr);
-    QVERIFY(p1.favouriteWeapon() == nullptr);
 }
 
 QTEST_APPLESS_MAIN(tst_Pawn)

@@ -48,9 +48,7 @@ public:
 public:
     Pawn(const QString &name = QString("Bot"),
          Team pawnTeam = Red,
-         uint pawnLives = 10);
-
-    Pawn(const Pawn &other);
+         uint pawnLives = 10);    
 
     // Validity
     bool isNull() const;
@@ -122,8 +120,6 @@ public:
     // Stuff
     bool operator == (const Pawn &other);
     bool operator != (const Pawn &other);
-
-    Pawn operator = (const Pawn &other);
 
 private:
     void copy(const Pawn &other);

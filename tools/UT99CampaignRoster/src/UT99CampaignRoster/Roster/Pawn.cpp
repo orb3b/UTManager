@@ -38,11 +38,6 @@ Pawn::Pawn(const QString &name, Pawn::Team pawnTeam, uint pawnLives) :
 
 }
 
-Pawn::Pawn(const Pawn &other)
-{
-    copy(other);
-}
-
 bool Pawn::isNull() const
 {
     return m_null;
@@ -293,12 +288,6 @@ bool Pawn::operator ==(const Pawn &other)
 bool Pawn::operator !=(const Pawn &other)
 {
     return !operator == (other);
-}
-
-Pawn Pawn::operator =(const Pawn &other)
-{
-    copy(other);
-    return *this;
 }
 
 void Pawn::copy(const Pawn &other)
