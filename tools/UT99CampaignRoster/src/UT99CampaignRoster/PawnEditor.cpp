@@ -27,11 +27,11 @@ PawnEditor::PawnEditor(QWidget *parent) :
 
     // Ui - Input
     // Ui - Team ComboBox
-    ui->cbTeam->addItem("None", QVariant::fromValue((int)Pawn::None));
-    ui->cbTeam->addItem("Red", QVariant::fromValue((int)Pawn::Red));
-    ui->cbTeam->addItem("Blue", QVariant::fromValue((int)Pawn::Blue));
-    ui->cbTeam->addItem("Green", QVariant::fromValue((int)Pawn::Green));
-    ui->cbTeam->addItem("Gold", QVariant::fromValue((int)Pawn::Gold));
+    ui->cbTeam->addItem(tr("None"), QVariant::fromValue(Pawn::None));
+    ui->cbTeam->addItem(tr("Red"), QVariant::fromValue(Pawn::Red));
+    ui->cbTeam->addItem(tr("Blue"), QVariant::fromValue(Pawn::Blue));
+    ui->cbTeam->addItem(tr("Green"), QVariant::fromValue(Pawn::Green));
+    ui->cbTeam->addItem(tr("Gold"), QVariant::fromValue(Pawn::Gold));
 
     // Ui - Material Combo boxes
     connect(ui->cbClasses, SIGNAL(currentIndexChanged(QString)), SLOT(onCurrentClassChanged(QString)), Qt::QueuedConnection);
@@ -40,17 +40,51 @@ PawnEditor::PawnEditor(QWidget *parent) :
     // Ui - Skill adjust group
     ui->hsSkillAdjust->setMinimum(Pawn::MIN_SKILL_ADJUST);
     ui->hsSkillAdjust->setMaximum(Pawn::MAX_SKILL_ADJUST);
+    ui->hsSkillAdjust->setSingleStep(1);
+    ui->hsSkillAdjust->setPageStep(1);
 
     ui->sbSkillAdjust->setMinimum(Pawn::MIN_SKILL_ADJUST);
     ui->sbSkillAdjust->setMaximum(Pawn::MAX_SKILL_ADJUST);
+    ui->sbSkillAdjust->setSingleStep(1);
 
     connectSliderAndSpinBox(ui->hsSkillAdjust, ui->sbSkillAdjust);
 
     // Ui - Accuracy group
     ui->dspAccuracy->setMinimum(Pawn::MIN_ACCURACY);
     ui->dspAccuracy->setMaximum(Pawn::MAX_ACCURACY);
+    ui->dspAccuracy->setSingleStep(0.01);
 
     connectSliderAndDoubleSpinBox(ui->hsAccuracy, ui->dspAccuracy);
+
+    // Ui - Alertness group
+    ui->dspAlertness->setMinimum(Pawn::MIN_ALERTNESS);
+    ui->dspAlertness->setMaximum(Pawn::MAX_ALERTNESS);
+    ui->dspAlertness->setSingleStep(0.01);
+
+    connectSliderAndDoubleSpinBox(ui->hsAlertness, ui->dspAlertness);
+
+    // Ui - Camping group
+    ui->dspCamping->setMinimum(Pawn::MIN_CAMPING);
+    ui->dspCamping->setMaximum(Pawn::MAX_CAMPING);
+    ui->dspCamping->setSingleStep(0.01);
+
+    connectSliderAndDoubleSpinBox(ui->hsCamping, ui->dspCamping);
+
+    // Ui - Strafing Agility group
+    ui->dspStrafingAgility->setMinimum(Pawn::MIN_STRAFING_AGILITY);
+    ui->dspStrafingAgility->setMaximum(Pawn::MAX_STRAFING_AGILITY);
+    ui->dspStrafingAgility->setSingleStep(0.01);
+
+    connectSliderAndDoubleSpinBox(ui->hsStrafingAgility, ui->dspStrafingAgility);
+
+    // Ui - Combat Style group
+    ui->cbCombatStyle->addItem(tr("Normal"), QVariant::fromValue(Pawn::Normal));
+    ui->cbCombatStyle->addItem(tr("Agressive"), QVariant::fromValue(Pawn::Aggressive));
+    ui->cbCombatStyle->addItem(tr("Berserk"), QVariant::fromValue(Pawn::Berserk));
+    ui->cbCombatStyle->addItem(tr("Cautious"), QVariant::fromValue(Pawn::Cautious));
+    ui->cbCombatStyle->addItem(tr("Avoidant"), QVariant::fromValue(Pawn::Avoidant));
+
+    // Ui - Jumpy Group
 
     // Change Ui according to editor's mode
     changeUi();
@@ -73,8 +107,17 @@ Pawn PawnEditor::getMember() const
     Pawn member;
 
     member.setName(ui->leName->text());
-    member.setTeam((Pawn::Team)ui->cbTeam->currentData().toInt());
+    member.setTeam(ui->cbTeam->currentData().value<Pawn::Team>());
     member.setLives(ui->sbLives->value());
+
+    member.setSkillAdjust(ui->sbSkillAdjust->value());
+
+    member.setAccuracy(ui->dspAccuracy->value());
+    member.setAlertness(ui->dspAlertness->value());
+    member.setCamping(ui->dspCamping->value());
+    member.setStrafingAgility(ui->dspStrafingAgility->value());
+    member.setCombatStyle(ui->cbCombatStyle->currentData().value<Pawn::CombatStyle>());
+    member.setJumpy(ui->chbJumpy->isChecked());
 
     return member;
 }
@@ -122,10 +165,17 @@ void PawnEditor::changeUi()
 void PawnEditor::fillUi(const Pawn &member)
 {
     ui->leName->setText(member.name());
-
     ui->cbTeam->setCurrentIndex(ui->cbTeam->findData(member.team()));
-
     ui->sbLives->setValue(member.lives());
+
+    ui->sbSkillAdjust->setValue(member.skillAdjust());
+
+    ui->dspAccuracy->setValue(member.accuracy());
+    ui->dspAlertness->setValue(member.alertness());
+    ui->dspCamping->setValue(member.camping());
+    ui->dspStrafingAgility->setValue(member.strafingAgility());
+    ui->cbCombatStyle->setCurrentIndex(ui->cbCombatStyle->findData(member.combatStyle()));
+    ui->chbJumpy->setChecked(member.jumpy());
 }
 
 void PawnEditor::connectSliderAndSpinBox(QAbstractSlider *slider, QAbstractSpinBox *spinBox)
