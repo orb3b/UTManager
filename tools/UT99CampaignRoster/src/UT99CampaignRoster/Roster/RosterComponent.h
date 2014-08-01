@@ -1,6 +1,18 @@
 #ifndef ROSTERCOMPONENT_H
 #define ROSTERCOMPONENT_H
 
+#define VERIFY_CONSISTENCY(returnValue) \
+do {\
+    if (!isConsistent())\
+        return returnValue;\
+} while (0)
+
+#define VERIFY_CONSISTENCY_VOID \
+do {\
+    if (!isConsistent())\
+        return;\
+} while (0)
+
 #include <QString>
 
 #include "CodeStyle.h"
@@ -13,6 +25,10 @@ public:
     virtual bool isError() const;
     virtual QString lastError() const;
     virtual void clearError() const;
+
+    // Function for checking integrity for component
+    // Can be used to check field shared by pointer
+    virtual bool isConsistent() const;
 
 protected:
     virtual void notifyError(const QString &text) const;

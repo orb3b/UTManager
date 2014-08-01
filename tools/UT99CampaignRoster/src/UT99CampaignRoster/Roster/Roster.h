@@ -16,7 +16,9 @@ public:
     Roster(QObject *parent = 0);
     ~Roster();
 
-    bool openProject(const QString &path);
+    virtual bool isConsistent() const OVERWRITE;
+
+    bool openProject(const QString &path);    
 
     OWNED PawnCollection *pawnCollection() const;
     OWNED TeamCollection *teamCollection() const;
@@ -34,7 +36,7 @@ private:
     QPointer<TeamCollection> m_teamCollection;
     QPointer<MaterialCollection> m_materialCollection;
 
-    RosterDataProvider *m_provider;
+    //QPointer<RosterDataProvider> m_provider;
 };
 
 #endif // ROSTER_H

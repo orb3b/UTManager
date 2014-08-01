@@ -11,7 +11,11 @@ public:
     tst_Roster();
 
 private Q_SLOTS:
-    void constructorAndMemberDestroyHandling();
+    void constructor();
+
+    void pawnCollection();
+    void teamCollection();
+    void materialCollection();
 
     void destructor();
 };
@@ -20,21 +24,40 @@ tst_Roster::tst_Roster()
 {
 }
 
-void tst_Roster::constructorAndMemberDestroyHandling()
+void tst_Roster::constructor()
 {
     QScopedPointer<Roster> roster(new Roster());
 
     QVERIFY(roster->materialCollection() != nullptr);
-    delete roster->materialCollection();
-    QVERIFY(roster->materialCollection() == nullptr);
-
     QVERIFY(roster->pawnCollection() != nullptr);
+    QVERIFY(roster->teamCollection() != nullptr);
+}
+
+void tst_Roster::pawnCollection()
+{
+    QScopedPointer<Roster> roster(new Roster());
+
     delete roster->pawnCollection();
     QVERIFY(roster->pawnCollection() == nullptr);
+    QVERIFY(!roster->isConsistent());
+}
 
-    QVERIFY(roster->teamCollection() != nullptr);
+void tst_Roster::teamCollection()
+{
+    QScopedPointer<Roster> roster(new Roster());
+
     delete roster->teamCollection();
     QVERIFY(roster->teamCollection() == nullptr);
+    QVERIFY(!roster->isConsistent());
+}
+
+void tst_Roster::materialCollection()
+{
+    QScopedPointer<Roster> roster(new Roster());
+
+    delete roster->materialCollection();
+    QVERIFY(roster->materialCollection() == nullptr);
+    QVERIFY(!roster->isConsistent());
 }
 
 void tst_Roster::destructor()

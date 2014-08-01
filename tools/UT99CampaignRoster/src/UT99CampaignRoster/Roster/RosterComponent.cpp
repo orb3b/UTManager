@@ -21,6 +21,11 @@ void RosterComponent::clearError() const
     m_lastError.clear();
 }
 
+bool RosterComponent::isConsistent() const
+{
+    return true;
+}
+
 void RosterComponent::notifyError(const QString & /*text*/) const
 {
     // No op - all work will be done it subclasses
