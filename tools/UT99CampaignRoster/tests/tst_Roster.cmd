@@ -2,6 +2,7 @@
 
 SET Tests=Roster\tst_qstring.exe^
 		  Roster\tst_pawn.exe^
+		  Roster\tst_roster^
 		  Application\tst_editorconnector.exe
 
 SetLocal EnableDelayedExpansion

@@ -84,7 +84,7 @@ PawnEditor::PawnEditor(QWidget *parent) :
     ui->cbCombatStyle->addItem(tr("Cautious"), QVariant::fromValue(Pawn::Cautious));
     ui->cbCombatStyle->addItem(tr("Avoidant"), QVariant::fromValue(Pawn::Avoidant));
 
-    // Ui - Jumpy Group
+    // Ui - Jumpy group
 
     // Change Ui according to editor's mode
     changeUi();

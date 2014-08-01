@@ -5,6 +5,9 @@
 
 #include "PawnCollection.h"
 #include "TeamCollection.h"
+#include "MaterialCollection.h"
+
+class RosterDataProvider;
 
 class Roster : public RosterObject
 {
@@ -15,8 +18,9 @@ public:
 
     bool openProject(const QString &path);
 
-    PawnCollection *pawnCollection();
-    TeamCollection *teamCollection();
+    OWNED PawnCollection *pawnCollection() const;
+    OWNED TeamCollection *teamCollection() const;
+    OWNED MaterialCollection *materialCollection() const;
 
 signals:
 
@@ -25,12 +29,12 @@ public slots:
 private:
     void registerMetatypes();
 
-private slots:
-    void onMemberDestroyed(QObject *obj);
-
 private:
-    PawnCollection *m_pawnCollection;
-    TeamCollection *m_teamCollection;
+    QPointer<PawnCollection> m_pawnCollection;
+    QPointer<TeamCollection> m_teamCollection;
+    QPointer<MaterialCollection> m_materialCollection;
+
+    RosterDataProvider *m_provider;
 };
 
 #endif // ROSTER_H

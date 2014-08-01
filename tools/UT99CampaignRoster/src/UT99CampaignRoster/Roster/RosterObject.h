@@ -2,6 +2,7 @@
 #define ROSTEROBJECT_H
 
 #include <QObject>
+#include <QPointer>
 #include "RosterComponent.h"
 
 class RosterObject : public QObject,

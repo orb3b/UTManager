@@ -2,58 +2,50 @@
 
 #include <QMetaType>
 
-#include "PawnCollection.h"
-#include "TeamCollection.h"
-
 Roster::Roster(QObject *parent) :
     RosterObject(parent),
-    m_pawnCollection(nullptr),
-    m_teamCollection(nullptr)
+    m_pawnCollection(new PawnCollection()),
+    m_teamCollection(new TeamCollection()),
+    m_materialCollection(new MaterialCollection()),
+    m_provider(nullptr)
 {
     registerMetatypes();
 }
 
 Roster::~Roster()
 {
-    if (m_pawnCollection) {
-        disconnect(m_pawnCollection, SIGNAL(destroyed(QObject*)), this, SLOT(onMemberDestroyed(QObject*)));
+    if (!m_pawnCollection.isNull())
         delete m_pawnCollection;
-        m_pawnCollection = nullptr;
-    }
 
-    if (m_teamCollection) {
-        disconnect(m_teamCollection, SIGNAL(destroyed(QObject*)), this, SLOT(onMemberDestroyed(QObject*)));
+    if (!m_teamCollection.isNull())
         delete m_teamCollection;
-        m_teamCollection = nullptr;
-    }
+
+    if (!m_materialCollection.isNull())
+        delete m_materialCollection;
 }
 
 bool Roster::openProject(const QString &path)
 {
+    // TODO: Remove me!
     if (!pawnCollection()->open(path))
         return postError(QString("Can't open pawn collection: %1").arg(pawnCollection()->lastError()));
 
     return postSuccess(QString("Roster project %1 have been opened successfully").arg(path));
 }
 
-PawnCollection *Roster::pawnCollection()
+PawnCollection *Roster::pawnCollection() const
 {
-    if (!m_pawnCollection) {
-        m_pawnCollection = new PawnCollection();
-        connect(m_pawnCollection, SIGNAL(destroyed(QObject*)), SLOT(onMemberDestroyed(QObject*)));
-    }
-
-    return m_pawnCollection;
+    return m_pawnCollection.data();
 }
 
-TeamCollection *Roster::teamCollection()
+TeamCollection *Roster::teamCollection() const
 {
-    if (!m_teamCollection) {
-        m_teamCollection = new TeamCollection();
-        connect(m_teamCollection, SIGNAL(destroyed(QObject*)), SLOT(onMemberDestroyed(QObject*)));
-    }
+    return m_teamCollection.data();
+}
 
-    return m_teamCollection;
+MaterialCollection *Roster::materialCollection() const
+{
+    return m_materialCollection.data();
 }
 
 void Roster::registerMetatypes()
@@ -62,13 +54,4 @@ void Roster::registerMetatypes()
     if (!registered) {
         qRegisterMetaType<Pawn>();
     }
-}
-
-void Roster::onMemberDestroyed(QObject *obj)
-{
-    if (obj == m_pawnCollection)
-        m_pawnCollection = nullptr;
-
-    if (obj == m_teamCollection)
-        m_teamCollection = nullptr;
 }

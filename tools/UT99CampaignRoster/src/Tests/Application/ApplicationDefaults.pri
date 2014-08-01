@@ -3,7 +3,7 @@ ROOT = "$$PWD/../../.."
 SRC = $$ROOT/src
 
 # Default include path for Roster Application tests
-INCLUDEPATH +=  "$$ROOT/../../../src" \
+INCLUDEPATH +=  "$$ROOT/../../src" \
                 "$$SRC/UT99CampaignRoster"
 
 # Default outdir for Roster Application tests
