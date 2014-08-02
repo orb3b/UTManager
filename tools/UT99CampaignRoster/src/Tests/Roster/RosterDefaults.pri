@@ -9,3 +9,4 @@ INCLUDEPATH +=  "$$ROOT/../../src" \
 
 # Default outdir for Roster tests
 DLLDESTDIR = "$$ROOT/tests/Roster"
+

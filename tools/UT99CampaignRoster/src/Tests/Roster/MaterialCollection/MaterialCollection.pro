@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2014-08-01T18:20:20
+# Project created by QtCreator 2014-08-02T11:26:18
 #
 #-------------------------------------------------
 
@@ -12,13 +12,13 @@ QT       += testlib
 
 QT       -= gui
 
-TARGET = tst_roster
+TARGET = tst_MaterialCollection
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
 
 
-SOURCES += tst_roster.cpp
-DEFINES += SRCDIR=\\\"$$PWD/\\\"
+SOURCES += tst_MaterialCollection.cpp
 
+DEFINES += SRCDIR=\\\"$$PWD/\\\"

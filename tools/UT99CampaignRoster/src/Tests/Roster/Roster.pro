@@ -4,6 +4,7 @@ SUBDIRS += \
     QString \
     Pawn \
     Roster \
-    RosterDataProvider
+    RosterDataProvider \
+    MaterialCollection
 
 #QString.depends += Roster

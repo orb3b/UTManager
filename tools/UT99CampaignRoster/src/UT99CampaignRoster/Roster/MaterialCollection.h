@@ -12,21 +12,16 @@ public:
     explicit MaterialCollection(QObject *parent = 0);
     ~MaterialCollection();
 
-    ClassCollection *classCollection();
+    virtual bool isConsistent() const OVERWRITE;
+
+    OWNED ClassCollection *classCollection();
 
 signals:
 
-public slots:
+public slots: 
 
 private:
-    void createClassCollection();
-    void deleteClassCollection();
-
-private slots:
-    void onMemberDestroyed(QObject *obj);    
-
-private:
-    ClassCollection *m_classCollection;
+    QPointer<ClassCollection> m_classCollection;
 
 };
 

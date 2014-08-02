@@ -4,6 +4,10 @@
 #
 #-------------------------------------------------
 
+!include( $$PWD/../RosterInclude.pri ) {
+    error("Couldn't find ../RosterInclude.pri file!")
+}
+
 QT       += testlib
 
 QT       -= gui

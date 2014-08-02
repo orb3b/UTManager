@@ -4,46 +4,23 @@
 
 MaterialCollection::MaterialCollection(QObject *parent) :
     RosterObject(parent),
-    m_classCollection(nullptr)
-{
-    createClassCollection();
+    m_classCollection(new ClassCollection())
+{    
 }
 
 MaterialCollection::~MaterialCollection()
 {    
-    deleteClassCollection();
+}
+
+bool MaterialCollection::isConsistent() const
+{
+    if (m_classCollection.isNull())
+        return postError("Consistent breakdown: Class collection is null.");
+
+    return true;
 }
 
 ClassCollection *MaterialCollection::classCollection()
 {
-    return m_classCollection;
-}
-
-void MaterialCollection::createClassCollection()
-{
-    deleteClassCollection();
-
-    m_classCollection = new ClassCollection();
-    connect(m_classCollection, SIGNAL(destroyed(QObject*)), SLOT(onMemberDestroyed(QObject*)));
-}
-
-void MaterialCollection::deleteClassCollection()
-{
-    if (!m_classCollection)
-        return;
-
-    disconnect(m_classCollection, SIGNAL(destroyed(QObject*)), this, SLOT(onMemberDestroyed(QObject*)));
-
-    delete m_classCollection;
-    m_classCollection = nullptr;
-}
-
-void MaterialCollection::onMemberDestroyed(QObject *obj)
-{
-    if (obj == m_classCollection) {
-        m_classCollection = nullptr;
-        postError("Class collection have been destroyed externally, going to recreate it");
-        createClassCollection();
-        return;
-    }
+    return m_classCollection.data();
 }
