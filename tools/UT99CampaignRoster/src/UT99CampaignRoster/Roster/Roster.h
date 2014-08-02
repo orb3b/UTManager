@@ -36,7 +36,7 @@ private:
     QPointer<TeamCollection> m_teamCollection;
     QPointer<MaterialCollection> m_materialCollection;
 
-    //QPointer<RosterDataProvider> m_provider;
+    QPointer<RosterDataProvider> m_provider;
 };
 
 #endif // ROSTER_H

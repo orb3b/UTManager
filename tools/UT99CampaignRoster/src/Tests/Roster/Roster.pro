@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
     QString \
     Pawn \
-    Roster
+    Roster \
+    RosterDataProvider
 
 #QString.depends += Roster

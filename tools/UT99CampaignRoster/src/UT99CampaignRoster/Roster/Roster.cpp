@@ -2,18 +2,22 @@
 
 #include <QMetaType>
 
+#include "RosterDataProvider.h"
+
 Roster::Roster(QObject *parent) :
     RosterObject(parent),
     m_pawnCollection(new PawnCollection()),
     m_teamCollection(new TeamCollection()),
-    m_materialCollection(new MaterialCollection())
-    //m_provider(nullptr)
+    m_materialCollection(new MaterialCollection()),
+    m_provider(nullptr)
 {
     registerMetatypes();
 }
 
 Roster::~Roster()
 {
+    //
+
     if (!m_pawnCollection.isNull())
         delete m_pawnCollection;
 
@@ -46,9 +50,12 @@ bool Roster::openProject(const QString &path)
     if (!pawnCollection()->open(path))
         return postError(QString("Can't open pawn collection: %1").arg(pawnCollection()->lastError()));
 
-    //m_provider = new RosterDataProvider();
+    m_provider = new RosterDataProvider();
 
-    //m_provider->setMaterialCollection(m_materialCollection);
+    m_provider->setMaterialCollection(m_materialCollection.data());
+    m_provider->setPath(path);
+
+    m_provider->load();
 
     return postSuccess(QString("Roster project %1 have been opened successfully").arg(path));
 }
