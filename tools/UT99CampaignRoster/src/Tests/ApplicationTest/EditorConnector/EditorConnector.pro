@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-!include( $$PWD/../ApplicationInclude.pri ) {
-    error("Couldn't find ../ApplicationInclude.pri file!")
+!include( $$PWD/../ApplicationTestDefaults.pri ) {
+    error("Couldn't find ../ApplicationTestDefaults.pri file!")
 }
 
 QT       += widgets testlib
@@ -17,6 +17,10 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 SOURCES += \
-    tst_editorConnector.cpp
+    tst_editorConnector.cpp \
+    $$PWD/../../../UT99CampaignRoster/Application/EditorConnector.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+
+HEADERS += \
+    $$PWD/../../../UT99CampaignRoster/Application/EditorConnector.h

@@ -19,6 +19,8 @@ for %%f in (%Tests%) do (
 )
 EndLocal
 
+echo ALL TESTS HAVE BEEN FINISHED SUCCESSFULLY
+
 goto end
 
 :end

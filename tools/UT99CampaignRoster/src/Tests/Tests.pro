@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-           Roster \
-           Application
+           RosterTest \
+           ApplicationTest

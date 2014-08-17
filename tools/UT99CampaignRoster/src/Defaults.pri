@@ -8,10 +8,12 @@ INCLUDED_PRI += $$PWD/Defaults.pri
 ROOT = "$$PWD/.."
 
 BIN = $$ROOT/bin
-LIB = $$ROOT/lib
-SRC = $$ROOT/src
+TESTS_BIN = $$ROOT/tests
 
-TESTS = $$ROOT/tests
+LIB = $$ROOT/lib
+
+SRC = $$ROOT/src
+SRC_CODE = $$ROOT/src/UT99CampaignRoster
 
 # Codestyle dependencies
 INCLUDEPATH += $$SRC/Common

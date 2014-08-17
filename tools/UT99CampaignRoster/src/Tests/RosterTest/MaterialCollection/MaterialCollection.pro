@@ -1,26 +1,24 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2014-07-29T12:05:47
+# Project created by QtCreator 2014-08-02T11:26:18
 #
 #-------------------------------------------------
 
-!include( $$PWD/../RosterInclude.pri ) {
-    error("Couldn't find ../RosterInclude.pri file!")
+!include( $$PWD/../RosterTestDefaults.pri ) {
+    error("Couldn't find ../RosterTestDefaults.pri file!")
 }
 
 QT       += testlib
 
 QT       -= gui
 
-TARGET = tst_qstring
+TARGET = tst_MaterialCollection
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
 
 
-DLLDESTDIR = "$$PWD\..\..\..\..\tests\Roster"
+SOURCES += tst_MaterialCollection.cpp
 
-
-SOURCES += tst_qstring.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"

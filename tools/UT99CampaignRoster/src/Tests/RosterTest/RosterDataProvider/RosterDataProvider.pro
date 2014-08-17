@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-!include( $$PWD/../RosterInclude.pri ) {
-    error("Couldn't find ../RosterInclude.pri file!")
+!include( $$PWD/../RosterTestDefaults.pri ) {
+    error("Couldn't find ../RosterTestDefaults.pri file!")
 }
 
 QT       += testlib

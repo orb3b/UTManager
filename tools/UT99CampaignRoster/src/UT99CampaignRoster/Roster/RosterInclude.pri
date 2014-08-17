@@ -23,7 +23,7 @@ LIBS += -l"$$ROSTER_TARGET"
 
 # ************ Roster Deploy ***********
 !isEmpty(ROSTER_DEPLOYDIR) {
-QMAKE_POST_LINK += "copy /y \"$$ROSTER_DESTDIR\\$$ROSTER_TARGET.dll\" \"$$ROSTER_DEPLOYDIR\\$$ROSTER_TARGET.dll\""
+QMAKE_POST_LINK += "copy /y \"$$ROSTER_DESTDIR\\$${ROSTER_TARGET}.dll\" \"$$ROSTER_DEPLOYDIR\\$${ROSTER_TARGET}.dll\""
 }
 
 # ######################################

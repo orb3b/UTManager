@@ -1,9 +1,9 @@
 #include <QString>
 #include <QtTest>
 
-#include "MaterialCollection.h"
-#include "ClassCollection.h"
-#include "WeaponCollection.h"
+#include <MaterialCollection.h>
+#include <ClassCollection.h>
+#include <WeaponCollection.h>
 
 class tst_MaterialCollection : public QObject
 {
