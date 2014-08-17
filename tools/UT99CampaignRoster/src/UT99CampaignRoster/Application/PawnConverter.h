@@ -1,9 +1,8 @@
 #ifndef PAWNCONVERTER_H
 #define PAWNCONVERTER_H
 
-#include "Roster/RosterObject.h"
-
-#include "Roster/Pawn.h"
+#include <RosterObject.h>
+#include <Pawn.h>
 
 class QListWidgetItem;
 class PawnGroup;

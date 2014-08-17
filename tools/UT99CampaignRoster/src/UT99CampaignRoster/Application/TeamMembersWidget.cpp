@@ -3,7 +3,8 @@
 
 #include <QMessageBox>
 
-#include "Roster/TeamCollection.h"
+#include <TeamCollection.h>
+
 #include "PawnEditor.h"
 
 TeamMembersWidget::TeamMembersWidget(QWidget *parent) :

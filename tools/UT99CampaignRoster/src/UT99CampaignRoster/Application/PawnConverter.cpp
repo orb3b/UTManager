@@ -2,7 +2,7 @@
 
 #include <QListWidgetItem>
 
-#include "Roster/PawnGroup.h"
+#include <PawnGroup.h>
 
 PawnConverter::PawnConverter(QObject *parent) :
     RosterObject(parent)

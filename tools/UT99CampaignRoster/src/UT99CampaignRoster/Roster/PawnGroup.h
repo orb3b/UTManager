@@ -15,7 +15,7 @@
 
 #include "Pawn.h"
 
-class PawnGroup : public RosterObject
+class ROSTER_EXPORT PawnGroup : public RosterObject
 {    
     Q_OBJECT
 public:

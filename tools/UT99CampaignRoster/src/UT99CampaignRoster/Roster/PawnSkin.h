@@ -5,7 +5,7 @@
 
 class FaceCollection;
 
-class PawnSkin : public Material
+class ROSTER_EXPORT PawnSkin : public Material
 {
     Q_OBJECT
 public:

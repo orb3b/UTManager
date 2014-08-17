@@ -3,7 +3,7 @@
 
 #include "RosterObject.h"
 
-class Material : public RosterObject
+class ROSTER_EXPORT Material : public RosterObject
 {
     Q_OBJECT
 public:

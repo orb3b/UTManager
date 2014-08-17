@@ -2,11 +2,11 @@
 #define PAWNEDITOR_H
 
 #include <QDialog>
-#include "Roster/RosterComponent.h"
+#include <RosterComponent.h>
 
 #include <QPointer>
 
-#include "Roster/Pawn.h"
+#include <Pawn.h>
 
 namespace Ui {
 class PawnEditor;

@@ -13,11 +13,9 @@ do {\
         return;\
 } while (0)
 
-#include <QString>
+#include "RosterCommon.h"
 
-#include "CodeStyle.h"
-
-class RosterComponent
+class ROSTER_EXPORT RosterComponent
 {
 public:
     RosterComponent();

@@ -1,10 +1,9 @@
-# Path to Root directory relative to Roster Application tests source
-ROOT = "$$PWD/../../.."
-SRC = $$ROOT/src
+!include( $$PWD/../../Defaults.pri ) {
+    error("Couldn't find Defaults.pri file!")
+}
 
 # Default include path for Roster Application tests
-INCLUDEPATH +=  "$$ROOT/../../src" \
-                "$$SRC/UT99CampaignRoster"
+INCLUDEPATH += "$$SRC/UT99CampaignRoster/Application"
 
 # Default outdir for Roster Application tests
 DLLDESTDIR = "$$ROOT/tests/Application"

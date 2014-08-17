@@ -3,7 +3,7 @@
 
 #include "Material.h"
 
-class PawnFace : public Material
+class ROSTER_EXPORT PawnFace : public Material
 {
     Q_OBJECT
 public:

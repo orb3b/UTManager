@@ -2,9 +2,10 @@
 #define TEAMMEMBERSWIDGET_H
 
 #include <QWidget>
-#include "Roster/RosterComponent.h"
+#include <RosterComponent.h>
 
-#include "Roster/Pawn.h"
+#include <Pawn.h>
+
 #include "PawnConverter.h"
 
 class PawnEditor;

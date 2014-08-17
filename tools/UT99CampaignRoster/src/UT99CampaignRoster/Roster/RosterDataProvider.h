@@ -5,7 +5,7 @@
 
 class MaterialCollection;
 
-class RosterDataProvider : public RosterObject
+class ROSTER_EXPORT RosterDataProvider : public RosterObject
 {
     Q_OBJECT
 public:

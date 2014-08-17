@@ -3,7 +3,7 @@
 
 #include "PawnGroup.h"
 
-class TeamCollection : public PawnGroup
+class ROSTER_EXPORT TeamCollection : public PawnGroup
 {
     Q_OBJECT
 public:

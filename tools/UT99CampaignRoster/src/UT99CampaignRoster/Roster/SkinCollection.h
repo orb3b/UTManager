@@ -7,7 +7,7 @@
 
 class PawnSkin;
 
-class SkinCollection : public RosterObject
+class ROSTER_EXPORT SkinCollection : public RosterObject
 {
     Q_OBJECT
 public:

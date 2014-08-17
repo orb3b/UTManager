@@ -1,5 +1,6 @@
 SOURCES += $$SRC/UT99CampaignRoster/Roster/ClassCollection.cpp \
            $$SRC/UT99CampaignRoster/Roster/FaceCollection.cpp \
+           $$SRC/UT99CampaignRoster/Roster/WeaponCollection.cpp \
            $$SRC/UT99CampaignRoster/Roster/Material.cpp \
            $$SRC/UT99CampaignRoster/Roster/MaterialCollection.cpp \
            $$SRC/UT99CampaignRoster/Roster/Pawn.cpp \
@@ -21,6 +22,7 @@ SOURCES += $$SRC/UT99CampaignRoster/Roster/ClassCollection.cpp \
 HEADERS += \
     $$SRC/UT99CampaignRoster/Roster/ClassCollection.h \
     $$SRC/UT99CampaignRoster/Roster/FaceCollection.h \
+    $$SRC/UT99CampaignRoster/Roster/WeaponCollection.h \
     $$SRC/UT99CampaignRoster/Roster/Material.h \
     $$SRC/UT99CampaignRoster/Roster/MaterialCollection.h \
     $$SRC/UT99CampaignRoster/Roster/Pawn.h \

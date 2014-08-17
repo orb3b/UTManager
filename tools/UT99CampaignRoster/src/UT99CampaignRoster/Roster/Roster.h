@@ -9,7 +9,7 @@
 
 class RosterDataProvider;
 
-class Roster : public RosterObject
+class ROSTER_EXPORT Roster : public RosterObject
 {
     Q_OBJECT
 public:

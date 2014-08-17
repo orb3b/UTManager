@@ -2,6 +2,7 @@
 
 SET Tests=Roster\tst_qstring.exe^
 		  Roster\tst_pawn.exe^
+		  Roster\tst_MaterialCollection.exe^
 		  Roster\tst_roster^
 		  Roster\tst_RosterDataProvider.exe^
 		  Application\tst_editorconnector.exe

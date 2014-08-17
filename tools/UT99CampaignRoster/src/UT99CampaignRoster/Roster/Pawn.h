@@ -11,7 +11,7 @@
 #include "PawnVoice.h"
 #include "Weapon.h"
 
-class Pawn
+class ROSTER_EXPORT Pawn
 {
 public:
     enum Team {

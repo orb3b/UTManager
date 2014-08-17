@@ -2,11 +2,11 @@
 #define PAWNGROUPSWIDGET_H
 
 #include <QWidget>
-#include "Roster/RosterComponent.h"
+#include <RosterComponent.h>
 
 #include <QList>
+#include <Pawn.h>
 
-#include "Roster/Pawn.h"
 #include "PawnConverter.h"
 
 class PawnEditor;

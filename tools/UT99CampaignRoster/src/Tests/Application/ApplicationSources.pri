@@ -2,7 +2,7 @@
     error("Couldn't find ../Roster/RosterSources.pri file!")
 }
 
-SOURCES += $$SRC/UT99CampaignRoster/EditorConnector.cpp
+SOURCES += $$SRC/UT99CampaignRoster/Application/EditorConnector.cpp
 
 HEADERS += \
-    $$SRC/UT99CampaignRoster/EditorConnector.h
+    $$SRC/UT99CampaignRoster/Application/EditorConnector.h

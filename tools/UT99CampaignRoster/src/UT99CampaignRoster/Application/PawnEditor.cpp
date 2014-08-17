@@ -3,14 +3,15 @@
 
 #include <QMessageBox>
 
-#include "Logs.h"
-#include "Roster/MaterialCollection.h"
-#include "Roster/ClassCollection.h"
-#include "Roster/SkinCollection.h"
-#include "Roster/FaceCollection.h"
-#include "Roster/PawnClass.h"
-#include "Roster/PawnSkin.h"
-#include "Roster/PawnFace.h"
+#include <Logs.h>
+#include <MaterialCollection.h>
+#include <ClassCollection.h>
+#include <SkinCollection.h>
+#include <FaceCollection.h>
+#include <PawnClass.h>
+#include <PawnSkin.h>
+#include <PawnFace.h>
+
 #include "EditorConnector.h"
 
 PawnEditor::PawnEditor(QWidget *parent) :

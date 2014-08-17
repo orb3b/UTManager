@@ -7,7 +7,7 @@
 
 class PawnClass;
 
-class ClassCollection : public RosterObject
+class ROSTER_EXPORT ClassCollection : public RosterObject
 {
     Q_OBJECT
 public:

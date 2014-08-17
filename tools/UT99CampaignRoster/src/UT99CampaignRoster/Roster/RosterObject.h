@@ -5,7 +5,7 @@
 #include <QPointer>
 #include "RosterComponent.h"
 
-class RosterObject : public QObject,
+class ROSTER_EXPORT RosterObject : public QObject,
                      public RosterComponent
 {
     Q_OBJECT

@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QString>
 
-#include "Roster/Roster.h"
+#include <Roster.h>
+
 #include "PawnEditor.h"
 
 class QAction;

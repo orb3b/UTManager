@@ -3,7 +3,7 @@
 
 #include "Material.h"
 
-class Weapon : public Material
+class ROSTER_EXPORT Weapon : public Material
 {
     Q_OBJECT
 public:

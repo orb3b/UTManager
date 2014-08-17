@@ -5,7 +5,7 @@
 
 #include <QList>
 
-class RosterContainer : public RosterObject
+class ROSTER_EXPORT RosterContainer : public RosterObject
 {
 public:
     explicit RosterContainer(QObject *parent = 0);

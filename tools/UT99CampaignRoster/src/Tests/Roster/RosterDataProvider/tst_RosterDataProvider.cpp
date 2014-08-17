@@ -13,6 +13,8 @@ public:
 
 private Q_SLOTS:
     void consistency();
+
+    void load();
 };
 
 tst_RosterDataProvider::tst_RosterDataProvider()
@@ -32,6 +34,15 @@ void tst_RosterDataProvider::consistency()
 
     delete collection.take();
     QVERIFY(!provider.isConsistent());
+}
+
+void tst_RosterDataProvider::load()
+{
+//    RosterDataProvider provider;
+//    QScopedPointer<MaterialCollection> collection(new MaterialCollection());
+//    provider.setMaterialCollection(collection);
+
+//    provider
 }
 
 QTEST_APPLESS_MAIN(tst_RosterDataProvider)

@@ -3,7 +3,8 @@
 
 #include <QMessageBox>
 
-#include "Roster/PawnCollection.h"
+#include <PawnCollection.h>
+
 #include "PawnEditor.h"
 
 PawnGroupsWidget::PawnGroupsWidget(QWidget *parent) :
