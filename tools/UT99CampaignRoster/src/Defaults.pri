@@ -9,6 +9,8 @@ ROOT = "$$PWD/.."
 
 BIN = $$ROOT/bin
 TESTS_BIN = $$ROOT/tests
+APPLICATION_TESTS_BIN = $$TESTS_BIN/Application
+ROSTER_TESTS_BIN = $$TESTS_BIN/Roster
 
 LIB = $$ROOT/lib
 

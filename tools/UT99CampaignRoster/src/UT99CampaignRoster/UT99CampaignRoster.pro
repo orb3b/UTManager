@@ -4,4 +4,5 @@ SUBDIRS += \
            Roster \
            Application
 
-Application.depends += Roster
+Application.depends += \
+    Roster

@@ -18,14 +18,12 @@ QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # Roster
-ROSTER_DEPLOYDIR = $$BIN
 !include( $$PWD/../Roster/RosterInclude.pri ) {
     error("Couldn't find RosterInclude.pri file!")
 }
 
 # *********** Output ************
-DESTDIR = $$BIN
-
+DLLDESTDIR = $$BIN
 
 # *********** Source ************
 
