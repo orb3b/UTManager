@@ -13,7 +13,7 @@ do {\
         return;\
 } while (0)
 
-#include "RosterCommon.h"
+#include "RosterGlobal.h"
 
 class ROSTER_EXPORT RosterComponent
 {

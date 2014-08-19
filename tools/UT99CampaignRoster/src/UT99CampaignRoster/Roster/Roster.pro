@@ -22,4 +22,4 @@ DLLDESTDIR += $$BIN \
 # *********** Source ************
 SOURCES += *.cpp
 HEADERS += *.h \
-    RosterCommon.h
+    RosterGlobal.h
