@@ -18,15 +18,18 @@ CONFIG   -= app_bundle
 
 INCLUDEPATH += $$DEP_INCLUDE
 
-LIBS += -L"$$DEP_LIB/gtest"
+LIBS += -L"$$DEP_LIB/gtest" \
+        -L"$$DEP_LIB/gmock"
 
 
 CONFIG(debug, debug|release){
     LIBS += -lgtestd
+    LIBS += -lgmockd
 }
 
 CONFIG(release, debug|release){
     LIBS += -lgtest
+    LIBS += -lgmock
 }
 
 TEMPLATE = app
@@ -34,5 +37,14 @@ TEMPLATE = app
 DLLDESTDIR += $$BIN
 
 SOURCES += tst_mocktest.cpp \
-    main.cpp
+    main.cpp \
+    Turtle.cpp \
+    MockTurtle.cpp \
+    Painter.cpp \
+    tst_Painter.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
+
+HEADERS += \
+    Turtle.h \
+    MockTurtle.h \
+    Painter.h
