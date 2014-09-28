@@ -1,4 +1,4 @@
-!include( $$PWD/../../Defaults.pri ) {
+!include( $$PWD/../TestDefaults.pri ) {
     error("Couldn't find Defaults.pri file!")
 }
 
